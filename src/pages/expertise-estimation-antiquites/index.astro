@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Img from '../../components/Img.astro';
-import Chevron from '../../components/Chevron.astro';
+import LinkCard from '../../components/LinkCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
@@ -16,11 +16,11 @@ const faq = faqGenerale.slice(0, 5);
 <Layout
   title="Estimation gratuite d’antiquités et objets d’art à domicile"
   {description}
-  ogPhoto="commode-louis-xv-1"
+  ogPhoto="secretaire-riesener"
   jsonLd={[serviceSchema({ name: 'Expertise et estimation gratuite d’antiquités', description, path, serviceType: 'Estimation d’antiquités' }), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Expertise & estimation', path }])]}
 >
   <Breadcrumbs items={[{ name: 'Expertise & estimation' }]} />
-  <PageHero eyebrow="Expertise d’art" h1="Estimation gratuite d’antiquités et d’objets d’art, à domicile en Bourgogne-Franche-Comté" lead="Une expertise écrite et argumentée, rendue par un expert qui se déplace, observe et documente chaque pièce, sans engagement ni obligation de vendre." photo="commode-louis-xv-2" />
+  <PageHero eyebrow="Expertise d’art" h1="Estimation gratuite d’antiquités et d’objets d’art, à domicile en Bourgogne-Franche-Comté" lead="Une expertise écrite et argumentée, rendue par un expert qui se déplace, observe et documente chaque pièce, sans engagement ni obligation de vendre." photo="secretaire-riesener" />
 
   <section class="section" aria-labelledby="quoi-title">
     <div class="wrap split">
@@ -35,7 +35,7 @@ const faq = faqGenerale.slice(0, 5);
         </ul>
         <p>L’estimation est séparée de toute offre de rachat. Vous restez libre de conserver, transmettre, mettre en vente par un autre canal ou nous confier vos pièces.</p>
       </div>
-      <Img slug="apothicairerie-ancienne" sizes="(max-width: 860px) 100vw, 45vw" />
+      <Img slug="console-rocaille" sizes="(max-width: 860px) 100vw, 45vw" />
     </div>
   </section>
 
@@ -43,12 +43,7 @@ const faq = faqGenerale.slice(0, 5);
     <div class="wrap">
       <div class="section-head"><span class="eyebrow">Que pouvons-nous estimer ?</span><h2 id="types-title">Mobilier, tableaux, argenterie, faïences, <em>horloges et caves</em></h2></div>
       <div class="grid grid--4">
-        {specialites.map((s) => (
-          <a class="card" href={`/specialites/${s.slug}/`}>
-            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
-            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
-          </a>
-        ))}
+        {specialites.map((s) => <LinkCard href={`/specialites/${s.slug}/`} titre={s.court} texte={s.accroche} />)}
       </div>
     </div>
   </section>

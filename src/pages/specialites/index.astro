@@ -11,18 +11,18 @@ import { breadcrumbSchema } from '../../lib/schema';
 <Layout
   title="Spécialités d’expertise d’art et d’antiquités | Bourgogne"
   description="Mobilier d’époque, argenterie, tableaux anciens, faïence de Nevers, horloges comtoises, grands crus de garde et objets de curiosité : nos 7 expertises."
-  ogPhoto="cabinet-curiosites"
+  ogPhoto="mobilier-exposition"
   jsonLd={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Spécialités', path: '/specialites/' }])]}
 >
   <Breadcrumbs items={[{ name: 'Spécialités' }]} />
-  <PageHero eyebrow="Domaines d’expertise" h1="Nos spécialités : antiquités, objets d’art et grands crus" lead="Sept domaines d’expertise, chacun confié à un expert qui en connaît les marques, les ateliers et le marché." photo="cabinet-curiosites" secondary={{ label: 'Voir nos 4 maisons', href: '/#maisons' }} />
+  <PageHero eyebrow="Domaines d’expertise" h1="Nos spécialités : antiquités, objets d’art et grands crus" lead="Sept domaines d’expertise, chacun confié à un expert qui en connaît les marques, les ateliers et le marché." photo="mobilier-exposition" secondary={{ label: 'Voir nos 4 maisons', href: '/#maisons' }} />
   <section class="section" aria-labelledby="liste-title">
     <div class="wrap">
       <h2 id="liste-title" class="sr-only">Liste des spécialités</h2>
       <div class="grid grid--3">
         {specialites.map((s) => (
           <a class="card" href={`/specialites/${s.slug}/`}>
-            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw" />
+            <Img slug={s.galerie[0] ?? s.photo} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw" />
             <div class="card-body">
               <h3>{s.nom}</h3>
               <p>{s.accroche}</p>

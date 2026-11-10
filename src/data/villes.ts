@@ -15,7 +15,7 @@ export interface Ville {
 
 export const villes: Ville[] = [
   {
-    slug: 'dijon', nom: 'Dijon', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'dijon-climats-unesco',
+    slug: 'dijon', nom: 'Dijon', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'dijon-hotel-aubriot',
     alentours: ['Fontaine-lès-Dijon', 'Talant', 'Chenôve', 'Plombières-lès-Dijon', 'Is-sur-Tille'],
     accroche: 'Hôtels particuliers, appartements bourgeois et maisons de la banlieue résidentielle dijonnaise.',
     patrimoine: 'Ancienne capitale des ducs de Bourgogne, Dijon a conservé de nombreux hôtels particuliers et appartements de magistrats. On y trouve du mobilier Louis XV et Louis XVI, des pendules, des tableaux de l’école bourguignonne et de l’argenterie de table.',
@@ -23,7 +23,7 @@ export const villes: Ville[] = [
     conseil: 'Pour un appartement dijonnais, un inventaire pièce par pièce évite d’oublier les objets rangés au grenier ou à la cave.',
   },
   {
-    slug: 'beaune', nom: 'Beaune', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'vignoble-bourgogne',
+    slug: 'beaune', nom: 'Beaune', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'apothicairerie-ancienne',
     alentours: ['Savigny-lès-Beaune', 'Pommard', 'Meursault', 'Aloxe-Corton', 'Chorey-lès-Beaune'],
     accroche: 'Maisons de négoce, domaines viticoles et caves de la Côte de Beaune.',
     patrimoine: 'Capitale des vins de Bourgogne, Beaune abrite des maisons de négoce où se mêlent caves de garde, argenterie de table et mobilier familial. Les domaines viticoles alentour conservent aussi tapisseries, faïences et peintures.',
@@ -31,7 +31,7 @@ export const villes: Ville[] = [
     conseil: 'Dans une maison de vigneron, pensez à inclure les dépendances, caves voûtées et pressoirs : on y trouve parfois des pièces rares.',
   },
   {
-    slug: 'nuits-saint-georges', nom: 'Nuits-Saint-Georges', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'cote-de-beaune',
+    slug: 'nuits-saint-georges', nom: 'Nuits-Saint-Georges', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'nuits-saint-georges-matin',
     alentours: ['Vosne-Romanée', 'Gevrey-Chambertin', 'Vougeot', 'Morey-Saint-Denis', 'Fixin'],
     accroche: 'Domaines et caves de la Côte de Nuits, des Hautes-Côtes aux grands crus.',
     patrimoine: 'Au cœur de la Côte de Nuits, les maisons de vignerons transmettent, en plus de leurs bouteilles, du mobilier rustique et bourgeois, des pièces d’argenterie et de nombreux objets du quotidien rural.',
@@ -71,7 +71,7 @@ export const villes: Ville[] = [
     conseil: 'Pour une estimation dans l’Auxerrois, envoyez dès la première prise de contact quelques photographies : cela accélère le rendez-vous.',
   },
   {
-    slug: 'sens', nom: 'Sens', departement: '89', maison: 'yonne-et-nivernais', photo: 'decor-peint-chateau',
+    slug: 'sens', nom: 'Sens', departement: '89', maison: 'yonne-et-nivernais', photo: 'sens-yonne',
     alentours: ['Villeneuve-sur-Yonne', 'Joigny', 'Pont-sur-Yonne', 'Saint-Clément', 'Villeneuve-l’Archevêque'],
     accroche: 'Le Sénonais : demeures du centre de Sens, villages de l’Yonne et maisons de campagne.',
     patrimoine: 'Siège d’un archevêché, Sens a transmis un patrimoine d’art religieux et de nombreux intérieurs de notables. Le Sénonais renferme du mobilier classique, des objets d’orfèvrerie et des peintures de qualité.',
@@ -79,7 +79,7 @@ export const villes: Ville[] = [
     conseil: 'Pour des objets de culte ou de legs, nous vous orientons sur les règles de cession applicables.',
   },
   {
-    slug: 'vezelay', nom: 'Vézelay', departement: '89', maison: 'yonne-et-nivernais', photo: 'reliquaire-dore',
+    slug: 'vezelay', nom: 'Vézelay', departement: '89', maison: 'yonne-et-nivernais', photo: 'vezelay-village',
     alentours: ['Avallon', 'Clamecy', 'Saint-Père', 'Asquins', 'Montréal'],
     accroche: 'Maisons de Vézelay, du Morvan et du Vézelien, loin des grandes routes.',
     patrimoine: 'Village de pèlerinage au pied de la basilique, Vézelay et son pays offrent un patrimoine d’objets religieux, de mobilier rural et de maisons d’artistes et d’écrivains.',
@@ -87,7 +87,7 @@ export const villes: Ville[] = [
     conseil: 'Dans le Morvan et le Vézelien, nous organisons des tournées pour estimer plusieurs maisons dans la même journée.',
   },
   {
-    slug: 'nevers', nom: 'Nevers', departement: '58', maison: 'yonne-et-nivernais', photo: 'nevers-cathedrale',
+    slug: 'nevers', nom: 'Nevers', departement: '58', maison: 'yonne-et-nivernais', photo: 'nevers-palais-ducal',
     alentours: ['Decize', 'La Charité-sur-Loire', 'Cosne-Cours-sur-Loire', 'Imphy', 'Clamecy'],
     accroche: 'Berceau de la faïence de grand feu, en Nièvre et sur les bords de Loire.',
     patrimoine: 'Nevers est connue dans le monde entier pour sa faïence. Les maisons de la ville et de la Nièvre conservent plats, bouquetières, assiettes révolutionnaires et services complets, ainsi que du mobilier nivernais.',

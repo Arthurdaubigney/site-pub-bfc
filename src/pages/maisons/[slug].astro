@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Img from '../../components/Img.astro';
-import Chevron from '../../components/Chevron.astro';
+import LinkCard from '../../components/LinkCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
@@ -64,16 +64,7 @@ const faq = [
         <p class="lead">{m.zone}.</p>
       </div>
       <div class="grid grid--3">
-        {cities.map((v) => (
-          <a class="card" href={`/antiquaire/${v.slug}/`}>
-            <Img slug={v.photo} sizes="(max-width: 640px) 100vw, 33vw" />
-            <div class="card-body">
-              <h3>Antiquaire à {v.nom}</h3>
-              <p>{v.accroche}</p>
-              <span class="link-arrow"><span class="u">Voir {v.nom}</span><Chevron /></span>
-            </div>
-          </a>
-        ))}
+        {cities.map((v) => <LinkCard href={`/antiquaire/${v.slug}/`} titre={`Antiquaire à ${v.nom}`} texte={v.accroche} cta={`Voir ${v.nom}`} />)}
       </div>
     </div>
   </section>
@@ -85,12 +76,7 @@ const faq = [
         <h2 id="spec-title">Les expertises <em>les plus demandées</em></h2>
       </div>
       <div class="grid grid--4">
-        {specs.map((s) => (
-          <a class="card" href={`/specialites/${s.slug}/`}>
-            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
-            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
-          </a>
-        ))}
+        {specs.map((s) => <LinkCard href={`/specialites/${s.slug}/`} titre={s.court} />)}
       </div>
     </div>
   </section>

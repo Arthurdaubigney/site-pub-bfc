@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Img from '../../components/Img.astro';
-import Chevron from '../../components/Chevron.astro';
+import LinkCard from '../../components/LinkCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
@@ -34,7 +34,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
   <PageHero eyebrow="Spécialité" h1={s.h1} lead={s.accroche} photo={s.photo} secondary={{ label: 'Nos autres spécialités', href: '/specialites/' }} />
 
   <section class="section" aria-labelledby="intro-title">
-    <div class="wrap split">
+    <div class={`wrap ${s.galerie[0] ? 'split' : ''}`}>
       <div class="prose">
         <span class="eyebrow">Notre approche</span>
         <h2 id="intro-title"><em>Expertise</em> : {s.court}</h2>
@@ -42,7 +42,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
         <p class="note"><strong>Le conseil de l’expert.</strong> {s.conseil}</p>
         <a class="btn" href={site.estimationAnchor}>Estimer mes pièces gratuitement</a>
       </div>
-      <Img slug={s.galerie[0] ?? s.photo} sizes="(max-width: 860px) 100vw, 45vw" />
+      {s.galerie[0] && <Img slug={s.galerie[0]} sizes="(max-width: 860px) 100vw, 45vw" />}
     </div>
   </section>
 
@@ -96,12 +96,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
     <div class="wrap">
       <h2 id="voisines-title">Autres expertises</h2>
       <div class="grid grid--3">
-        {voisines.map((v) => (
-          <a class="card" href={`/specialites/${v.slug}/`}>
-            <Img slug={v.photo} sizes="(max-width: 640px) 100vw, 33vw" />
-            <div class="card-body"><h3>{v.nom}</h3><span class="link-arrow"><span class="u">Voir la spécialité</span><Chevron /></span></div>
-          </a>
-        ))}
+        {voisines.map((v) => <LinkCard href={`/specialites/${v.slug}/`} titre={v.nom} texte={v.accroche} cta="Voir la spécialité" />)}
       </div>
     </div>
   </section>

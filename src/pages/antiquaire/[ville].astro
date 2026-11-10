@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Img from '../../components/Img.astro';
-import Chevron from '../../components/Chevron.astro';
+import LinkCard from '../../components/LinkCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
@@ -42,7 +41,7 @@ const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gr
   <PageHero eyebrow={`${dep.nom} (${dep.code}) · ${maison.court}`} h1={`Antiquaire et expert d’art à ${v.nom} (${dep.code}) : estimation gratuite`} lead={v.accroche} photo={v.photo} secondary={{ label: `La ${maison.court}`, href: `/maisons/${maison.slug}/` }} />
 
   <section class="section" aria-labelledby="pat-title">
-    <div class="wrap split">
+    <div class="wrap split split--text">
       <div class="prose">
         <span class="eyebrow">Autour de {v.nom}</span>
         <h2 id="pat-title">Un patrimoine à <em>faire estimer</em></h2>
@@ -51,7 +50,11 @@ const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gr
         <p class="note"><strong>Conseil.</strong> {v.conseil}</p>
         <a class="btn" href={site.estimationAnchor}>Estimation gratuite à {v.nom}</a>
       </div>
-      <Img slug={v.photo} sizes="(max-width: 860px) 100vw, 45vw" />
+      <aside class="around" aria-labelledby="around-title">
+        <h3 id="around-title">Communes desservies autour de {v.nom}</h3>
+        <ul>{v.alentours.map((a) => <li>{a}</li>)}</ul>
+        <p class="around-note">{dep.nom} ({dep.code}) · {maison.court}</p>
+      </aside>
     </div>
   </section>
 
@@ -69,12 +72,7 @@ const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gr
     <div class="wrap">
       <div class="section-head"><span class="eyebrow">Nos expertises</span><h2 id="spec-title">Toutes les spécialités, <em>à votre porte</em></h2></div>
       <div class="grid grid--4">
-        {specialites.slice(0, 4).map((s) => (
-          <a class="card" href={`/specialites/${s.slug}/`}>
-            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
-            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
-          </a>
-        ))}
+        {specialites.slice(0, 4).map((s) => <LinkCard href={`/specialites/${s.slug}/`} titre={s.court} />)}
       </div>
     </div>
   </section>
@@ -84,5 +82,12 @@ const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gr
 </Layout>
 <style>
   .note { border-left: 2px solid var(--brass); padding: 4px 0 4px 20px; color: var(--ink); }
+  .split--text { align-items: start; grid-template-columns: 1.3fr 0.7fr; }
+  .around { background: var(--stone-2); border-top: 2px solid var(--brass); padding: 32px 30px; }
+  .around h3 { font-size: 1.5rem; }
+  .around ul { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 0; }
+  .around li { padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .around-note { margin: 0; font-size: .85rem; color: var(--brass-deep); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+  @media (max-width: 860px) { .split--text { grid-template-columns: 1fr; } }
   .big li { font: 500 1.35rem/1.2 var(--font-display); padding: 14px 24px; }
 </style>

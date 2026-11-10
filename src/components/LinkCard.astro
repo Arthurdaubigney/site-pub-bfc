@@ -1,0 +1,18 @@
+---
+import Chevron from './Chevron.astro';
+// Carte de maillage interne SANS photo : évite de répéter une image sur plusieurs pages.
+interface Props { href: string; titre: string; texte?: string; cta?: string; kicker?: string }
+const { href, titre, texte, cta = 'En savoir plus', kicker } = Astro.props;
+---
+<a class="card card--text" {href}>
+  <div class="card-body">
+    {kicker && <span class="eyebrow">{kicker}</span>}
+    <h3>{titre}</h3>
+    {texte && <p>{texte}</p>}
+    <span class="link-arrow"><span class="u">{cta}</span><Chevron /></span>
+  </div>
+</a>
+<style>
+  .card--text { border-top: 2px solid var(--brass); }
+  .card--text .card-body { padding: 28px 26px 26px; min-height: 160px; }
+</style>
