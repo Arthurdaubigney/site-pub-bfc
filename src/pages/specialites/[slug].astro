@@ -37,7 +37,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
     <div class="wrap split">
       <div class="prose">
         <span class="eyebrow">Notre approche</span>
-        <h2 id="intro-title">Comment nous <em>expertisons</em> : {s.court.toLowerCase()}</h2>
+        <h2 id="intro-title"><em>Expertise</em> : {s.court}</h2>
         {s.intro.map((p) => <p>{p}</p>)}
         <p class="note"><strong>Le conseil de l’expert.</strong> {s.conseil}</p>
         <a class="btn" href={site.estimationAnchor}>Estimer mes pièces gratuitement</a>
@@ -90,7 +90,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
     </div>
   </section>
 
-  <Faq items={s.faq} title={`Questions sur : ${s.court.toLowerCase()}`} />
+  <Faq items={s.faq} title={`Questions sur : ${s.court}`} />
 
   <section class="section section--tint" aria-labelledby="voisines-title">
     <div class="wrap">
@@ -106,7 +106,7 @@ const maisonsConcernees = maisons.filter((m) => m.specialites.includes(s.slug));
     </div>
   </section>
 
-  <CtaBand titre={`Faites estimer vos pièces : <em>${s.court.toLowerCase()}</em>`} />
+  <CtaBand titre={`Faites estimer vos pièces : <em>${s.court}</em>`} />
 </Layout>
 
 <style>

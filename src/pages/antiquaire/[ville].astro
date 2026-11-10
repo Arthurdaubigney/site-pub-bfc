@@ -24,8 +24,9 @@ const faq = [
   { q: `Rachetez-vous des successions à ${v.nom} et en ${dep.nom} ?`, a: `Oui. Nous inventorions et estimons mobilier, tableaux, argenterie, faïences, horloges et caves dans tout le département (${dep.code}), et pouvons racheter tout ou partie des biens si vous le souhaitez.` },
   { q: `Quels objets expertisez-vous à ${v.nom} ?`, a: `Surtout : ${v.objets.join(', ')}. Mais toutes les catégories d’antiquités et d’objets d’art sont examinées.` },
 ];
-const title = `Antiquaire à ${v.nom} : expertise et estimation gratuite`;
-const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gratuite à domicile, rachat de succession, mobilier, tableaux, argenterie, faïence.`;
+const variants = [`Antiquaire à ${v.nom} : expertise et estimation gratuite`, `Antiquaire à ${v.nom} : estimation gratuite d’objets d’art`, `Antiquaire à ${v.nom} : estimation gratuite`];
+const title = variants.find((t) => t.length <= 62) ?? variants[2];
+const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gratuite à domicile, rachat de succession, mobilier, tableaux, argenterie, faïence. Rapport écrit.`;
 ---
 <Layout
   {title}

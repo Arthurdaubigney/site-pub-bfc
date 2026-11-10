@@ -73,7 +73,7 @@ export default function TallyForm({
       ) : (
         <div className="tally-placeholder" role="note">
           <span className="tally-mark" aria-hidden="true">✦</span>
-          <h3>Votre demande d’estimation</h3>
+          <p className="tally-title">Votre demande d’estimation</p>
           <p>
             Le formulaire Tally s’affichera ici. Renseignez <code>PUBLIC_TALLY_FORM_ID</code> dans l’environnement du
             site (voir <code>.env.example</code>) ou passez la prop <code>formId</code> à ce composant.
@@ -89,7 +89,7 @@ export default function TallyForm({
         .tally { width: 100%; min-height: var(--tally-min); background: var(--stone); border: 1px solid var(--line); position: relative; }
         .tally iframe { display: block; width: 100%; border: 0; min-height: var(--tally-min); }
         .tally-placeholder { min-height: var(--tally-min); display: grid; align-content: center; justify-items: start; gap: 10px; padding: clamp(28px, 6vw, 64px); background: repeating-linear-gradient(135deg, transparent 0 22px, rgba(197,160,89,.08) 22px 23px); }
-        .tally-placeholder h3 { margin: 0; }
+        .tally-title { margin: 0; font: 500 1.75rem/1.1 var(--font-display); }
         .tally-placeholder p { color: var(--ink-soft); max-width: 46ch; }
         .tally-placeholder code { background: var(--stone-2); padding: 2px 6px; font-size: .88em; }
         .tally-placeholder ul { margin: 0; padding-left: 18px; color: var(--ink-soft); }

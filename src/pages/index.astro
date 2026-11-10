@@ -128,12 +128,12 @@ import { photo } from '../data/photos';
 </Layout>
 
 <style>
-  .hero { position: relative; min-height: min(100svh, 920px); display: grid; align-items: end; overflow: hidden; color: var(--stone); background: var(--wine-deep); }
+  .hero { position: relative; min-height: min(calc(100svh - 77px), 860px); display: grid; align-items: end; overflow: hidden; color: var(--stone); background: var(--wine-deep); }
   :global(.hero-img) { position: absolute; inset: 0; }
   :global(.hero-img img) { width: 100%; height: 100%; object-fit: cover; }
   .hero-shade { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(74,21,27,.92) 0%, rgba(74,21,27,.72) 42%, rgba(74,21,27,.18) 100%), linear-gradient(0deg, rgba(26,26,26,.55), transparent 40%); }
-  .hero-in { position: relative; padding-block: clamp(120px, 18vh, 200px) clamp(56px, 9vh, 96px); }
-  .hero h1 { color: var(--stone); max-width: 15ch; font-size: clamp(2.8rem, 6.6vw, 6rem); }
+  .hero-in { position: relative; padding-block: clamp(72px, 12vh, 140px) clamp(40px, 7vh, 80px); }
+  .hero h1 { color: var(--stone); max-width: 15ch; font-size: clamp(2.7rem, 5.6vw, 5.2rem); }
   .hero h1 em { color: var(--brass); }
   .hero-lead { font-size: clamp(1.05rem, 1.5vw, 1.25rem); max-width: 52ch; color: rgba(251,249,245,.9); }
   .hero .btn-row { margin-top: 12px; }
