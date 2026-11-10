@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EstimationSection from '../../components/EstimationSection.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+---
+<Layout
+  title="Contact : demande d’estimation gratuite d’antiquités"
+  description="Demandez une estimation gratuite : décrivez vos antiquités et vos objets d’art en deux minutes, un expert vous rappelle en Bourgogne-Franche-Comté."
+  ogPhoto="chateau-chambre"
+  jsonLd={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Contact', path: '/contact/' }])]}
+>
+  <Breadcrumbs items={[{ name: 'Contact' }]} />
+  <EstimationSection h="h1" source="contact" titre="Demande d’estimation gratuite d’antiquités, <em>en Bourgogne-Franche-Comté</em>" />
+</Layout>

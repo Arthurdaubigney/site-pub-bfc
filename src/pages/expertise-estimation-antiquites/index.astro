@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Chevron from '../../components/Chevron.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import EstimationSection from '../../components/EstimationSection.astro';
+import { specialites } from '../../data/specialites';
+import { faqGenerale } from '../../data/faq';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '../../lib/schema';
+const path = '/expertise-estimation-antiquites/';
+const description = 'Estimation gratuite d’antiquités et d’objets d’art à domicile en Bourgogne-Franche-Comté : expertise écrite, argumentée, sans engagement ni obligation de vente.';
+const faq = faqGenerale.slice(0, 5);
+---
+<Layout
+  title="Estimation gratuite d’antiquités et objets d’art à domicile"
+  {description}
+  ogPhoto="commode-louis-xv-1"
+  jsonLd={[serviceSchema({ name: 'Expertise et estimation gratuite d’antiquités', description, path, serviceType: 'Estimation d’antiquités' }), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Expertise & estimation', path }])]}
+>
+  <Breadcrumbs items={[{ name: 'Expertise & estimation' }]} />
+  <PageHero eyebrow="Expertise d’art" h1="Estimation gratuite d’antiquités et d’objets d’art, à domicile en Bourgogne-Franche-Comté" lead="Une expertise écrite et argumentée, rendue par un expert qui se déplace, observe et documente chaque pièce, sans engagement ni obligation de vendre." photo="commode-louis-xv-2" />
+
+  <section class="section" aria-labelledby="quoi-title">
+    <div class="wrap split">
+      <div class="prose">
+        <span class="eyebrow">Ce que contient l’estimation</span>
+        <h2 id="quoi-title">Un avis <em>indépendant et écrit</em></h2>
+        <ul class="ticks">
+          <li>Identification de chaque pièce : époque, atelier, matériaux, état</li>
+          <li>Valeur de marché argumentée, avec photographies et références</li>
+          <li>Conseils de conservation, de transmission ou de cession</li>
+          <li>Rapport utilisable pour une succession, un partage ou une assurance</li>
+        </ul>
+        <p>L’estimation est séparée de toute offre de rachat. Vous restez libre de conserver, transmettre, mettre en vente par un autre canal ou nous confier vos pièces.</p>
+      </div>
+      <Img slug="apothicairerie-ancienne" sizes="(max-width: 860px) 100vw, 45vw" />
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="types-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Que pouvons-nous estimer ?</span><h2 id="types-title">Mobilier, tableaux, argenterie, faïences, <em>horloges et caves</em></h2></div>
+      <div class="grid grid--4">
+        {specialites.map((s) => (
+          <a class="card" href={`/specialites/${s.slug}/`}>
+            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
+            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="prep-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Avant le rendez-vous</span><h2 id="prep-title">Comment <em>préparer</em> une estimation</h2></div>
+      <div class="grid grid--3 prep">
+        <article><span class="n">1</span><h3>Ne touchez à rien</h3><p>Ni nettoyage, ni cirage, ni restauration : l’état d’origine renseigne l’expert.</p></article>
+        <article><span class="n">2</span><h3>Photographiez</h3><p>Vue d’ensemble, détails, marques, signatures, revers : quelques clichés suffisent pour un premier avis.</p></article>
+        <article><span class="n">3</span><h3>Rassemblez les documents</h3><p>Factures, certificats, notes de famille, anciennes expertises : la provenance fait la valeur.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <EstimationSection source="expertise" />
+</Layout>
+<style>
+  .prep article { border-top: 1px solid var(--ink); padding-top: 20px; }
+  .prep .n { font: 500 3rem/1 var(--font-display); color: var(--brass-deep); }
+</style>

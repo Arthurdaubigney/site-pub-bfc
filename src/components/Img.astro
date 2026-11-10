@@ -1,0 +1,31 @@
+---
+import { Picture } from 'astro:assets';
+import { photo, type PhotoSlug } from '../data/photos';
+
+interface Props {
+  slug: PhotoSlug;
+  sizes?: string;
+  widths?: number[];
+  eager?: boolean;
+  class?: string;
+  /** Surcharge facultative du texte alternatif (sinon texte SEO de data/photos.ts). */
+  alt?: string;
+  position?: string;
+}
+const { slug, sizes = '(max-width: 860px) 100vw, 50vw', widths = [480, 800, 1200], eager = false, class: cls, alt, position } = Astro.props;
+const p = photo(slug);
+---
+<div class:list={['frame', cls]}>
+  <Picture
+    src={p.src}
+    alt={alt ?? p.alt}
+    title={p.title}
+    widths={widths}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding={eager ? 'sync' : 'async'}
+    style={position ? `object-position:${position}` : undefined}
+  />
+</div>

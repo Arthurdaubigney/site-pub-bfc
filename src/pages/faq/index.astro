@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { faqGenerale } from '../../data/faq';
+import { specialites } from '../../data/specialites';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+const all = [...faqGenerale, ...specialites.flatMap((s) => s.faq.slice(0, 1))];
+---
+<Layout
+  title="FAQ estimation d’antiquités et d’objets d’art | Bourgogne"
+  description="Estimation gratuite, rachat de succession, déplacement à domicile, préparation du rendez-vous : toutes les réponses de nos experts en antiquités."
+  ogPhoto="vitrine-ancienne"
+  jsonLd={[faqSchema(all), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'FAQ', path: '/faq/' }])]}
+>
+  <Breadcrumbs items={[{ name: 'FAQ' }]} />
+  <header class="wrap faq-head">
+    <span class="eyebrow">Questions fréquentes</span>
+    <h1>Questions fréquentes sur l’estimation d’antiquités et d’objets d’art</h1>
+  </header>
+  <Faq items={all} title="Toutes vos questions" />
+  <CtaBand />
+</Layout>
+<style>
+  .faq-head { padding-top: clamp(40px, 6vw, 80px); max-width: 920px; margin-inline: auto; }
+  .faq-head h1 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); }
+</style>

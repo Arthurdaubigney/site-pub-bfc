@@ -1,0 +1,12 @@
+---
+import { site } from '../data/site';
+---
+<div class="mbar" data-mbar>
+  <a class="btn btn--brass" href={site.estimationAnchor}>Estimation gratuite</a>
+</div>
+<style>
+  .mbar { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: rgba(251,249,245,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform var(--duration-medium) var(--ease-smooth-out); }
+  .mbar.is-on { transform: none; }
+  .mbar .btn { width: 100%; }
+  @media (max-width: 860px) { .mbar { display: block; } }
+</style>

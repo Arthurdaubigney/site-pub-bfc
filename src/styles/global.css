@@ -1,0 +1,187 @@
+@import '@fontsource/cormorant-garamond/latin-400.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-400-italic.css';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+/* ───────── Tokens « Bourgogne Prestige » ───────── */
+:root {
+  --stone: #fbf9f5;
+  --stone-2: #f4efe6;
+  --stone-3: #e9e1d2;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4640;
+  --wine: #581c25;
+  --wine-deep: #4a151b;
+  --oak: #1c3322;
+  --brass: #c5a059;
+  --brass-deep: #8a6a2a; /* laiton foncé : texte lisible sur pierre (contraste 4.5+) */
+  --line: rgba(26, 26, 26, 0.14);
+
+  --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --wrap: 1180px;
+  --gutter: clamp(20px, 5vw, 56px);
+  --radius: 2px;
+
+  /* Motion tokens (transitions.dev) */
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --distance-medium: 12px;
+  --blur-medium: 3px;
+  --stagger-dur: 500ms;
+  --stagger-distance: 12px;
+  --stagger-stagger: 90ms;
+  --stagger-blur: 3px;
+  --stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body {
+  margin: 0; background: var(--stone); color: var(--ink);
+  font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--brass-deep); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--wine); color: var(--stone); }
+
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 0.5em; color: var(--ink); text-wrap: balance; }
+h1 { font-size: clamp(2.5rem, 5.2vw, 4.6rem); }
+h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); }
+h3 { font-size: clamp(1.4rem, 2vw, 1.75rem); }
+p { margin: 0 0 1.1em; max-width: 68ch; text-wrap: pretty; }
+em { font-style: italic; color: var(--wine); }
+
+.wrap { width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 100; background: var(--wine); color: var(--stone); padding: 12px 18px; text-decoration: none; }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.eyebrow { font-family: var(--font-body); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-deep); display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--brass); }
+.on-dark .eyebrow { color: var(--brass); }
+
+/* ───────── Sections ───────── */
+.section { padding-block: clamp(72px, 10vw, 140px); }
+.section--tint { background: var(--stone-2); }
+.section--wine { background: var(--wine-deep); color: var(--stone); }
+.section--oak { background: var(--oak); color: var(--stone); }
+.section--wine h2, .section--wine h3, .section--oak h2, .section--oak h3 { color: var(--stone); }
+.section--wine em, .section--oak em { color: var(--brass); }
+.section--wine p, .section--oak p { color: rgba(251, 249, 245, 0.86); }
+.section-head { max-width: 760px; margin-bottom: clamp(40px, 6vw, 72px); }
+.lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: var(--ink-soft); line-height: 1.6; }
+.section--wine .lead, .section--oak .lead { color: rgba(251, 249, 245, 0.86); }
+
+/* ───────── Boutons ───────── */
+.btn {
+  --bg: var(--wine); --fg: var(--stone); --bd: var(--wine);
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 48px; padding: 14px 28px; border: 1px solid var(--bd); background: var(--bg); color: var(--fg);
+  font: 600 0.8125rem/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; cursor: pointer;
+  border-radius: var(--radius);
+  transition: background var(--duration-fast) var(--ease-smooth-out), color var(--duration-fast) var(--ease-smooth-out), border-color var(--duration-fast) var(--ease-smooth-out), transform var(--duration-quick) var(--ease-smooth-out);
+}
+.btn:hover { --bg: var(--wine-deep); --bd: var(--wine-deep); }
+.btn:active { transform: scale(0.98); }
+.btn--brass { --bg: var(--brass); --fg: var(--ink); --bd: var(--brass); }
+.btn--brass:hover { --bg: #d4b06a; --bd: #d4b06a; }
+.btn--ghost { --bg: transparent; --fg: var(--ink); --bd: var(--ink); }
+.btn--ghost:hover { --bg: var(--ink); --fg: var(--stone); --bd: var(--ink); }
+.on-dark .btn--ghost, .section--wine .btn--ghost, .section--oak .btn--ghost { --fg: var(--stone); --bd: rgba(251, 249, 245, 0.55); }
+.on-dark .btn--ghost:hover, .section--wine .btn--ghost:hover, .section--oak .btn--ghost:hover { --bg: var(--stone); --fg: var(--ink); --bd: var(--stone); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Lien « En savoir plus » : chevron qui s'ouvre (transitions.dev #24) */
+.link-arrow { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--wine); padding-block: 12px; min-height: 44px; }
+.link-arrow .chev { display: inline-flex; transition: transform 350ms var(--ease-smooth-out); }
+.link-arrow .chev path { transition: transform 350ms var(--ease-smooth-out); transform-origin: 10px 8px; }
+.link-arrow:hover .chev { transform: translateX(3px); }
+.link-arrow:hover .chev .top { transform: rotate(-8deg); }
+.link-arrow:hover .chev .bot { transform: rotate(8deg); }
+.link-arrow span.u { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 350ms var(--ease-smooth-out); padding-bottom: 3px; }
+.link-arrow:hover span.u { background-size: 100% 1px; }
+.section--wine .link-arrow, .section--oak .link-arrow { color: var(--brass); }
+
+/* ───────── Photos : zoom 1.03 dans le cadre ───────── */
+.frame { overflow: hidden; background: var(--stone-3); position: relative; }
+.frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-smooth-out); }
+a:hover .frame img, .frame:hover img { transform: scale(1.03); }
+
+/* ───────── Cartes liées ───────── */
+.card { display: flex; flex-direction: column; text-decoration: none; background: var(--stone); border: 1px solid var(--line); transition: transform var(--duration-fast) var(--ease-smooth-out), border-color var(--duration-fast) var(--ease-smooth-out), box-shadow var(--duration-fast) var(--ease-smooth-out); }
+.card:hover { transform: translateY(-2px); border-color: var(--brass); box-shadow: 0 18px 40px -24px rgba(88, 28, 37, 0.35); }
+.card .frame { aspect-ratio: 4 / 3; }
+.card-body { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card-body h3 { margin: 0; }
+.card-body p { margin: 0; color: var(--ink-soft); font-size: 0.98rem; line-height: 1.55; }
+.card-body .link-arrow { margin-top: auto; padding-top: 14px; }
+.grid { display: grid; gap: clamp(20px, 3vw, 36px); }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 960px) { .grid--3, .grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; } }
+
+/* ───────── Split ───────── */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.split--reverse > :first-child { order: 2; }
+.split .frame { aspect-ratio: 4 / 5; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } .split--reverse > :first-child { order: 0; } .split .frame { aspect-ratio: 4 / 3; } }
+
+/* ───────── Listes ───────── */
+.ticks { list-style: none; margin: 0 0 1.5em; padding: 0; display: grid; gap: 14px; }
+.ticks li { position: relative; padding-left: 34px; }
+.ticks li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 18px; height: 1px; background: var(--brass); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+.chips li, .chips a { padding: 9px 16px; border: 1px solid var(--line); font-size: 0.9rem; text-decoration: none; background: var(--stone); transition: border-color var(--duration-fast), background var(--duration-fast); }
+.chips a:hover { border-color: var(--brass); background: var(--stone-2); }
+.section--wine .chips li, .section--oak .chips li { background: transparent; border-color: rgba(251,249,245,.28); color: var(--stone); }
+
+/* ───────── Hero : entrée unique au chargement (transitions.dev #18) ───────── */
+.t-stagger-line { opacity: 0; transform: translateY(var(--stagger-distance)); filter: blur(var(--stagger-blur)); transition: opacity var(--stagger-dur) var(--stagger-ease), transform var(--stagger-dur) var(--stagger-ease), filter var(--stagger-dur) var(--stagger-ease); }
+.is-shown .t-stagger-line { opacity: 1; transform: none; filter: none; }
+.t-stagger-line:nth-child(2) { transition-delay: var(--stagger-stagger); }
+.t-stagger-line:nth-child(3) { transition-delay: calc(var(--stagger-stagger) * 2); }
+.t-stagger-line:nth-child(4) { transition-delay: calc(var(--stagger-stagger) * 3); }
+.t-stagger-line:nth-child(5) { transition-delay: calc(var(--stagger-stagger) * 4); }
+.no-js .t-stagger-line { opacity: 1; transform: none; filter: none; }
+
+/* ───────── Accordéon (transitions.dev #21) ───────── */
+.acc { border-top: 1px solid var(--line); }
+.acc-item { border-bottom: 1px solid var(--line); }
+.acc-head { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 0; background: none; border: 0; cursor: pointer; text-align: left; font: 500 clamp(1.25rem, 2vw, 1.55rem)/1.25 var(--font-display); color: var(--ink); min-height: 44px; }
+.acc-head:hover { color: var(--wine); }
+.acc-chev { flex: none; display: inline-flex; width: 20px; height: 20px; transition: transform 250ms var(--ease-smooth-out); }
+.acc-chev svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.acc-chev path { vector-effect: non-scaling-stroke; }
+.acc-item[data-open='true'] .acc-chev { transform: scaleY(-1); }
+.acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 250ms var(--ease-smooth-out); }
+.acc-item[data-open='true'] .acc-panel { grid-template-rows: 1fr; }
+.acc-inner { overflow: hidden; opacity: 0; filter: blur(2px); transition: opacity 250ms var(--ease-smooth-out), filter 250ms var(--ease-smooth-out); }
+.acc-item[data-open='true'] .acc-inner { opacity: 1; filter: blur(0); }
+.acc-inner p { padding-bottom: 24px; margin: 0; color: var(--ink-soft); }
+
+/* ───────── Fil d'Ariane ───────── */
+.crumbs { font-size: 0.85rem; color: var(--ink-soft); padding-block: 22px 0; }
+.crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0; padding: 0; }
+.crumbs li + li::before { content: '/'; margin-right: 10px; color: var(--brass-deep); }
+.crumbs a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 300ms var(--ease-smooth-out); }
+.crumbs a:hover { background-size: 100% 1px; }
+
+/* ───────── Prose ───────── */
+.prose p { color: var(--ink-soft); }
+.prose h2 { margin-top: 1.6em; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .t-stagger-line { opacity: 1; transform: none; filter: none; }
+}

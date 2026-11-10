@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import EstimationSection from '../../components/EstimationSection.astro';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '../../lib/schema';
+const path = '/rachat-succession-antiquites/';
+const description = 'Rachat de succession et vide-maison en Bourgogne-Franche-Comté : inventaire, estimation écrite et offre de rachat pour mobilier, tableaux, argenterie et cave.';
+const faq = [
+  { q: 'Comment se passe le rachat d’une succession ?', a: 'Nous inventorions les biens sur place, remettons un rapport d’estimation écrit, puis, si vous le souhaitez, une offre de rachat distincte. Vous êtes libre de refuser.' },
+  { q: 'Votre rapport est-il utilisable par le notaire ?', a: 'Oui. L’estimation écrite et illustrée peut être remise au notaire pour le partage ou la déclaration de succession, et à votre assurance.' },
+  { q: 'Faut-il tout vider avant votre venue ?', a: 'Non, surtout pas. Laissez les pièces en place : l’emplacement, les dépendances, le grenier et la cave sont parcourus par l’expert.' },
+  { q: 'Rachetez-vous uniquement les pièces de valeur ?', a: 'Nous estimons l’ensemble. Nous rachetons selon notre intérêt pour chaque pièce et vous orientons pour le reste, y compris vers d’autres canaux de vente.' },
+  { q: 'Que se passe-t-il pour les objets de famille que l’on veut garder ?', a: 'Vous les conservez, bien sûr. Nous pouvons les inclure dans le rapport pour faciliter le partage entre héritiers.' },
+];
+---
+<Layout
+  title="Rachat de succession et vide-maison : antiquités, Bourgogne"
+  {description}
+  ogPhoto="decor-peint-chateau"
+  jsonLd={[serviceSchema({ name: 'Rachat de succession et d’antiquités', description, path, serviceType: 'Rachat de succession' }), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Rachat de succession', path }])]}
+>
+  <Breadcrumbs items={[{ name: 'Rachat de succession' }]} />
+  <PageHero eyebrow="Successions & partages" h1="Rachat de succession et d’antiquités en Bourgogne-Franche-Comté" lead="Inventaire discret, estimation écrite recevable par le notaire et offre de rachat claire : une succession se traite avec tact, rigueur et sans précipitation." photo="chateau-chambre" cta="Parler de ma succession" />
+
+  <section class="section" aria-labelledby="proc-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Notre démarche</span><h2 id="proc-title">Trois temps, <em>sans pression</em></h2></div>
+      <div class="grid grid--3 proc">
+        <article><span class="n">I</span><h3>Inventaire sur place</h3><p>L’expert parcourt la maison, les dépendances, le grenier et la cave, pièce par pièce, et photographie chaque objet.</p></article>
+        <article><span class="n">II</span><h3>Estimation écrite</h3><p>Un rapport argumenté, avec photographies, que vous pouvez remettre au notaire, aux héritiers et à votre assurance.</p></article>
+        <article><span class="n">III</span><h3>Offre libre</h3><p>Si vous le souhaitez, une offre de rachat pour tout ou partie des biens. Aucune obligation, aucun délai imposé.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--oak" aria-labelledby="biens-title">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Ce que nous rachetons</span>
+        <h2 id="biens-title">Tout ce qui <em>a une histoire</em></h2>
+        <ul class="ticks">
+          <li>Mobilier d’époque, de style et régional</li>
+          <li>Tableaux anciens, gravures, dessins</li>
+          <li>Argenterie, orfèvrerie, bijoux anciens</li>
+          <li>Faïences de Nevers et de Desvres, porcelaines</li>
+          <li>Horloges comtoises, pendules, objets de curiosité</li>
+          <li>Caves et grands crus de garde</li>
+        </ul>
+        <a class="btn btn--brass" href="/contact/#estimation">Faire estimer une succession</a>
+      </div>
+      <Img slug="vitrine-ancienne" sizes="(max-width: 860px) 100vw, 45vw" />
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <EstimationSection source="succession" />
+</Layout>
+<style>
+  .proc article { border-top: 1px solid var(--ink); padding-top: 20px; }
+  .proc .n { font: 500 3rem/1 var(--font-display); color: var(--brass-deep); }
+</style>

@@ -1,0 +1,36 @@
+---
+import type { FaqItem } from '../data/specialites';
+interface Props { items: FaqItem[]; title?: string; id?: string; headingLevel?: 'h2' | 'h3' }
+const { items, title = 'Questions fréquentes', id = 'faq', headingLevel = 'h2' } = Astro.props;
+const H = headingLevel;
+---
+<section class="section" id={id} aria-labelledby={`${id}-title`}>
+  <div class="wrap faq-grid">
+    <div class="section-head">
+      <span class="eyebrow">Réponses d’experts</span>
+      <H id={`${id}-title`}>{title}</H>
+      <p class="lead">Les questions que se posent le plus souvent les familles et les collectionneurs avant une estimation.</p>
+    </div>
+    <div class="acc">
+      {items.map((it, i) => (
+        <div class="acc-item" data-open="false" data-acc>
+          <h3 class="sr-only-h">
+            <button class="acc-head" type="button" aria-expanded="false" aria-controls={`${id}-p${i}`} id={`${id}-b${i}`}>
+              <span>{it.q}</span>
+              <span class="acc-chev"><svg viewBox="0 0 16 16"><path d="M4 6.5L8 10.5L12 6.5" /></svg></span>
+            </button>
+          </h3>
+          <div class="acc-panel" id={`${id}-p${i}`} role="region" aria-labelledby={`${id}-b${i}`}>
+            <div class="acc-inner"><p>{it.a}</p></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .faq-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .faq-grid .section-head { margin: 0; position: sticky; top: 110px; }
+  .sr-only-h { margin: 0; font: inherit; }
+  @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; } .faq-grid .section-head { position: static; margin-bottom: 8px; } }
+</style>

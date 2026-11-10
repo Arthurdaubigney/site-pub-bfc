@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Chevron from '../../components/Chevron.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { maisons } from '../../data/maisons';
+import { specialiteBySlug } from '../../data/specialites';
+import { villes } from '../../data/villes';
+import { departements, site } from '../../data/site';
+import { faqGenerale } from '../../data/faq';
+import { breadcrumbSchema, faqSchema, maisonSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return maisons.map((m) => ({ params: { slug: m.slug }, props: { m } }));
+}
+const { m } = Astro.props;
+const path = `/maisons/${m.slug}/`;
+const cities = villes.filter((v) => m.villes.includes(v.slug));
+const deps = departements.filter((d) => m.departements.includes(d.code));
+const specs = m.specialites.map(specialiteBySlug);
+const faq = [
+  { q: `Intervenez-vous partout en ${deps.map((d) => d.nom).join(' et en ')} ?`, a: `Oui. La ${m.nom.replace(/^La /, '')} se déplace dans tout le territoire (${m.zone}), ainsi que dans les communes limitrophes, sans frais pour l’estimation.` },
+  { q: 'Comment prendre rendez-vous avec un expert ?', a: 'Remplissez le formulaire d’estimation : quelques lignes et, si possible, des photographies. Un expert de la maison vous rappelle pour fixer un rendez-vous à votre domicile.' },
+  ...faqGenerale.slice(3, 5),
+];
+---
+<Layout
+  title={m.title}
+  description={m.description}
+  ogPhoto={m.photo}
+  jsonLd={[maisonSchema(m.slug), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Nos maisons', path: '/maisons/' }, { name: m.court, path }])]}
+>
+  <Breadcrumbs items={[{ name: 'Nos maisons', path: '/maisons/' }, { name: m.court }]} />
+  <PageHero eyebrow={`Maison ${m.numero} · ${deps.map((d) => `${d.nom} (${d.code})`).join(' · ')}`} h1={m.h1} lead={m.accroche} photo={m.photo} secondary={{ label: 'Toutes nos maisons', href: '/maisons/' }} />
+
+  <section class="section" aria-labelledby="intro-title">
+    <div class="wrap split">
+      <div class="prose">
+        <span class="eyebrow">La maison</span>
+        <h2 id="intro-title">Un expert <em>de votre terroir</em></h2>
+        {m.intro.map((p) => <p>{p}</p>)}
+        <a class="btn" href={site.estimationAnchor}>Demander une estimation</a>
+      </div>
+      <Img slug={m.photoSecondaire} sizes="(max-width: 860px) 100vw, 45vw" />
+    </div>
+  </section>
+
+  <section class="section section--wine on-dark" aria-labelledby="terroir-title">
+    <div class="wrap terroir">
+      <span class="eyebrow">Patrimoine local</span>
+      <h2 id="terroir-title">{m.terroir.titre}</h2>
+      <p class="lead">{m.terroir.texte}</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="villes-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Villes desservies</span>
+        <h2 id="villes-title">Où nous <em>nous déplaçons</em></h2>
+        <p class="lead">{m.zone}.</p>
+      </div>
+      <div class="grid grid--3">
+        {cities.map((v) => (
+          <a class="card" href={`/antiquaire/${v.slug}/`}>
+            <Img slug={v.photo} sizes="(max-width: 640px) 100vw, 33vw" />
+            <div class="card-body">
+              <h3>Antiquaire à {v.nom}</h3>
+              <p>{v.accroche}</p>
+              <span class="link-arrow"><span class="u">Voir {v.nom}</span><Chevron /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="spec-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Spécialités de la maison</span>
+        <h2 id="spec-title">Les expertises <em>les plus demandées</em></h2>
+      </div>
+      <div class="grid grid--4">
+        {specs.map((s) => (
+          <a class="card" href={`/specialites/${s.slug}/`}>
+            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
+            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <CtaBand titre={`Un expert de la ${m.court} <em>vous répond</em>`} />
+</Layout>
+<style>
+  .terroir h2 { max-width: 22ch; }
+  .terroir .lead { max-width: 60ch; }
+</style>

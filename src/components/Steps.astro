@@ -1,0 +1,78 @@
+---
+import { photo, type PhotoSlug } from '../data/photos';
+import { Picture } from 'astro:assets';
+const steps: { n: string; titre: string; texte: string; photo: PhotoSlug }[] = [
+  { n: '01', titre: 'Vous décrivez', texte: 'Formulaire en deux minutes : nature des objets, commune, quelques photographies. Rien d’autre à préparer.', photo: 'cabinet-curiosites' },
+  { n: '02', titre: 'Nous examinons', texte: 'Un expert de la maison la plus proche se déplace, observe les assemblages, les marques, la patine, l’état.', photo: 'commode-louis-xv-1' },
+  { n: '03', titre: 'Vous recevez un rapport', texte: 'Estimation écrite et argumentée, avec photographies, valable pour une succession, un partage ou une assurance.', photo: 'apothicairerie-ancienne' },
+  { n: '04', titre: 'Vous décidez librement', texte: 'Conserver, transmettre, confier ou vendre : notre offre éventuelle est distincte de l’estimation, et sans pression.', photo: 'argenterie-chateau' },
+];
+---
+<section class="section section--oak steps" aria-labelledby="steps-title" data-chapters>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Notre méthode</span>
+      <h2 id="steps-title">Une expertise <em>en quatre temps</em></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="steps-visual" aria-hidden="false">
+        <div class="steps-stack">
+          {steps.map((s, i) => (
+            <div class={`steps-img${i === 0 ? ' is-active' : ''}`} data-step-img={i}>
+              <Picture src={photo(s.photo).src} alt={photo(s.photo).alt} title={photo(s.photo).title} widths={[480, 800, 1000]} sizes="(max-width: 860px) 100vw, 45vw" formats={['avif', 'webp']} loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <ol class="steps-list">
+        {steps.map((s, i) => (
+          <li class={i === 0 ? 'is-active' : ''} data-step={i}>
+            <span class="steps-n">{s.n}</span>
+            <h3>{s.titre}</h3>
+            <p>{s.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+<style>
+  .steps-grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 7vw, 110px); align-items: start; }
+  .steps-visual { position: sticky; top: 110px; }
+  .steps-stack { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #0f1d14; }
+  .steps-img { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); filter: blur(3px); transition: opacity 500ms var(--ease-smooth-out), transform 700ms var(--ease-smooth-out), filter 500ms var(--ease-smooth-out); }
+  .steps-img.is-active { opacity: 1; transform: none; filter: none; }
+  .steps-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .steps-list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .steps-list li { min-height: 52vh; display: flex; flex-direction: column; justify-content: center; padding-block: 28px; border-top: 1px solid rgba(251,249,245,.18); opacity: .38; transition: opacity 400ms var(--ease-smooth-out); }
+  .steps-list li.is-active { opacity: 1; }
+  .steps-n { font: 500 clamp(3rem, 6vw, 5rem)/1 var(--font-display); color: var(--brass); }
+  .steps-list h3 { color: var(--stone); font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 8px 0 12px; }
+  .steps-list p { max-width: 44ch; }
+  @media (max-width: 860px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .steps-visual { display: none; }
+    .steps-list li { min-height: 0; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .steps-list li { opacity: 1; } .steps-img { transition: none; } }
+</style>
+<script>
+  // Moment « photo-chapters » : l'image suit l'étape lue (seul mouvement lié au scroll du site)
+  const root = document.querySelector('[data-chapters]');
+  if (root && 'IntersectionObserver' in window) {
+    const items = [...root.querySelectorAll<HTMLElement>('[data-step]')];
+    const imgs = [...root.querySelectorAll<HTMLElement>('[data-step-img]')];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const i = Number((e.target as HTMLElement).dataset.step);
+          items.forEach((el, k) => el.classList.toggle('is-active', k === i));
+          imgs.forEach((el, k) => el.classList.toggle('is-active', k === i));
+        });
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    );
+    items.forEach((el) => io.observe(el));
+  }
+</script>

@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Chevron from '../../components/Chevron.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { departements } from '../../data/site';
+import { maisons } from '../../data/maisons';
+import { villes } from '../../data/villes';
+import { breadcrumbSchema } from '../../lib/schema';
+---
+<Layout
+  title="Zones d’intervention : antiquaire en Bourgogne-Franche-Comté"
+  description="Expertise d’antiquités à Dijon, Beaune, Besançon, Auxerre, Mâcon, Chalon, Belfort, Nevers : nos zones d’intervention dans les 8 départements de la région."
+  ogPhoto="besancon-citadelle"
+  jsonLd={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Zones d’intervention', path: '/zones-intervention/' }])]}
+>
+  <Breadcrumbs items={[{ name: 'Zones d’intervention' }]} />
+  <PageHero eyebrow="Notre territoire" h1="Antiquaire dans toute la Bourgogne-Franche-Comté : nos zones d’intervention" lead="De la Côte-d’Or au Territoire de Belfort, de la Nièvre au Jura : un expert se déplace chez vous, sans frais, pour estimer vos objets d’art." photo="paysage-jura" />
+  <section class="section" aria-labelledby="dep-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Par département</span><h2 id="dep-title">Huit départements, <em>quatre maisons</em></h2></div>
+      <div class="deps">
+        {departements.map((d) => {
+          const m = maisons.find((x) => x.departements.includes(d.code))!;
+          const vs = villes.filter((v) => v.departement === d.code);
+          return (
+            <article class="dep">
+              <span class="dep-code">{d.code}</span>
+              <h3>{d.nom}</h3>
+              <p>Préfecture : {d.prefecture}. Maison référente : <a href={`/maisons/${m.slug}/`}>{m.court}</a>.</p>
+              {vs.length > 0 && <ul class="chips">{vs.map((v) => <li><a href={`/antiquaire/${v.slug}/`}>{v.nom}</a></li>)}</ul>}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+  <section class="section section--tint" aria-labelledby="lim-title">
+    <div class="wrap split">
+      <Img slug="vignoble-bourgogne" sizes="(max-width: 860px) 100vw, 45vw" />
+      <div>
+        <span class="eyebrow">Départements limitrophes</span>
+        <h2 id="lim-title">Au-delà de la région, <em>sur demande</em></h2>
+        <p class="lead">Pour une succession importante, une collection ou une cave, nos experts se déplacent aussi dans l’Ain, l’Aube, la Haute-Marne, le Loiret, le Cher, l’Allier, le Rhône, la Loire, le Haut-Rhin et la Haute-Savoie voisins.</p>
+        <a class="link-arrow" href="/contact/"><span class="u">Nous décrire votre situation</span><Chevron /></a>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Layout>
+<style>
+  .deps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 clamp(32px, 6vw, 96px); border-top: 1px solid var(--line); }
+  .dep { padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .dep-code { font: 500 3.2rem/1 var(--font-display); color: var(--brass-deep); }
+  .dep h3 { margin: 6px 0 8px; }
+  .dep p a { color: var(--wine); }
+  @media (max-width: 760px) { .deps { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,55 @@
+---
+import { nav, site } from '../data/site';
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href);
+---
+<header class="hdr" data-header>
+  <div class="wrap hdr-in">
+    <a class="brand" href="/" aria-label={`${site.name} – accueil`}>
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="20" y="28" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="25" font-weight="600" fill="currentColor">V</text></svg>
+      <span class="brand-text"><strong>{site.name}</strong><small>Antiquaires &amp; expertise d’art</small></span>
+    </a>
+    <nav class="primary" aria-label="Navigation principale">
+      <ul>
+        {nav.map((n) => (<li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}><span class="u">{n.label}</span></a></li>))}
+      </ul>
+    </nav>
+    <a class="btn btn--brass hdr-cta" href={site.estimationAnchor}>Estimation gratuite</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-btn>
+      <span class="sr-only">Menu</span><span class="bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+  <div class="mobile" id="mobile-menu" data-menu hidden>
+    <ul>
+      {nav.map((n) => (<li><a href={n.href}>{n.label}</a></li>))}
+      <li><a href="/a-propos/">La Maison</a></li>
+      <li><a href="/faq/">Questions fréquentes</a></li>
+    </ul>
+    <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>
+  </div>
+</header>
+<style>
+  .hdr { position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); transition: box-shadow var(--duration-fast) var(--ease-smooth-out); }
+  .hdr.is-stuck { box-shadow: 0 12px 30px -22px rgba(26,26,26,.45); }
+  .hdr-in { display: flex; align-items: center; gap: clamp(16px, 3vw, 40px); min-height: 76px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--wine); margin-right: auto; }
+  .brand-mark { width: 38px; height: 38px; flex: none; }
+  .brand-text { display: grid; line-height: 1.1; }
+  .brand-text strong { font: 600 1.5rem/1 var(--font-display); color: var(--ink); letter-spacing: .01em; }
+  .brand-text small { font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--brass-deep); font-weight: 600; margin-top: 4px; }
+  .primary ul { display: flex; gap: clamp(14px, 2vw, 30px); list-style: none; margin: 0; padding: 0; }
+  .primary a { text-decoration: none; font-size: .88rem; font-weight: 500; padding: 12px 0; display: inline-block; min-height: 44px; }
+  .primary a .u { background: linear-gradient(var(--wine), var(--wine)) 0 100% / 0 1px no-repeat; transition: background-size 350ms var(--ease-smooth-out); padding-bottom: 3px; }
+  .primary a:hover .u, .primary a[aria-current='page'] .u { background-size: 100% 1px; }
+  .hdr-cta { min-height: 44px; padding: 12px 20px; }
+  .menu-btn { display: none; width: 48px; height: 48px; background: none; border: 1px solid var(--line); cursor: pointer; place-items: center; }
+  .bars { display: grid; gap: 6px; width: 22px; }
+  .bars i { display: block; height: 1.5px; background: var(--ink); transition: transform var(--duration-fast) var(--ease-smooth-out); }
+  .menu-btn[aria-expanded='true'] .bars i:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .menu-btn[aria-expanded='true'] .bars i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+  .mobile { position: fixed; inset: 77px 0 0 0; background: var(--stone); padding: 28px var(--gutter) 40px; overflow: auto; display: grid; align-content: start; gap: 28px; }
+  .mobile[hidden] { display: none; }
+  .mobile ul { list-style: none; margin: 0; padding: 0; }
+  .mobile li a { display: block; padding: 16px 0; border-bottom: 1px solid var(--line); text-decoration: none; font: 500 1.7rem/1.1 var(--font-display); }
+  @media (max-width: 1060px) { .primary { display: none; } .menu-btn { display: grid; } .hdr-cta { display: none; } }
+</style>

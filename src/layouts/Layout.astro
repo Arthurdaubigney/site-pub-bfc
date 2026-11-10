@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import { site } from '../data/site';
+import { photo, type PhotoSlug } from '../data/photos';
+import { organizationSchema, webSiteSchema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  ogPhoto?: PhotoSlug;
+  jsonLd?: object[];
+  noindex?: boolean;
+  preloadHero?: boolean;
+}
+const { title, description, ogPhoto = 'chateau-chambre', jsonLd = [], noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const og = await getImage({ src: photo(ogPhoto).src, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+const ogUrl = new URL(og.src, site.url).toString();
+const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
+---
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
+    <meta name="theme-color" content="#581c25" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+    <meta name="geo.region" content="FR-BFC" />
+    <meta name="geo.placename" content="Bourgogne-Franche-Comté" />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+    {graph.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Header />
+    <main id="contenu"><slot /></main>
+    <Footer />
+    <MobileBar />
+    <script>
+      // Entrée du hero : une seule fois au chargement (transitions.dev – texts reveal)
+      requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll('[data-enter]').forEach((el) => el.classList.add('is-shown'))));
+
+      // Header : ombre au scroll + barre CTA mobile après le premier écran
+      const hdr = document.querySelector<HTMLElement>('[data-header]');
+      const mbar = document.querySelector<HTMLElement>('[data-mbar]');
+      const onScroll = () => {
+        const y = window.scrollY;
+        hdr?.classList.toggle('is-stuck', y > 8);
+        mbar?.classList.toggle('is-on', y > window.innerHeight * 0.7 && !document.querySelector('[data-tally-container]:hover'));
+      };
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Menu mobile
+      const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+      const menu = document.querySelector<HTMLElement>('[data-menu]');
+      btn?.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', String(open));
+        if (menu) menu.hidden = !open;
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') btn.click();
+      });
+
+      // Accordéons (FAQ)
+      document.querySelectorAll<HTMLElement>('[data-acc]').forEach((item) => {
+        const b = item.querySelector<HTMLButtonElement>('.acc-head');
+        b?.addEventListener('click', () => {
+          const open = item.dataset.open !== 'true';
+          item.dataset.open = String(open);
+          b.setAttribute('aria-expanded', String(open));
+        });
+      });
+    </script>
+  </body>
+</html>

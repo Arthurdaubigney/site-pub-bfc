@@ -1,0 +1,27 @@
+---
+import TallyForm from './TallyForm.tsx';
+interface Props { source?: string; titre?: string; h?: 'h1' | 'h2' }
+const { source = 'site', titre = 'Décrivez-nous vos objets, <em>nous revenons vers vous</em>', h = 'h2' } = Astro.props;
+const H = h;
+---
+<section class="section est" id="estimation" aria-labelledby="est-title">
+  <div class="wrap est-in">
+    <div class="est-text">
+      <span class="eyebrow">Estimation gratuite &amp; sans engagement</span>
+      <H id="est-title" set:html={titre} />
+      <p class="lead">Deux minutes suffisent. Indiquez ce que vous possédez, où vous vous trouvez, ajoutez si possible quelques photographies : l’expert de la maison régionale la plus proche vous rappelle.</p>
+      <ul class="ticks">
+        <li>Estimation écrite, indépendante de toute offre de rachat</li>
+        <li>Déplacement à domicile partout en Bourgogne-Franche-Comté</li>
+        <li>Confidentialité totale pour les successions et les partages</li>
+      </ul>
+    </div>
+    <div class="est-form"><TallyForm client:visible source={source} /></div>
+  </div>
+</section>
+<style>
+  .est { background: var(--stone-2); }
+  .est-in { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .est-text { position: sticky; top: 110px; }
+  @media (max-width: 960px) { .est-in { grid-template-columns: 1fr; } .est-text { position: static; } }
+</style>

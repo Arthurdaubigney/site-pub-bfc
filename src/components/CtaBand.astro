@@ -1,0 +1,23 @@
+---
+import { site } from '../data/site';
+interface Props { titre?: string; texte?: string; variant?: 'wine' | 'oak'; secondaire?: { label: string; href: string } }
+const { titre = 'Faites estimer vos objets d’art, gratuitement', texte = 'Décrivez vos pièces en deux minutes : un expert de la maison la plus proche vous répond et se déplace chez vous, sans engagement.', variant = 'wine', secondaire } = Astro.props;
+---
+<section class={`section section--${variant} cta-band`} aria-labelledby="cta-title">
+  <div class="wrap cta-in">
+    <div>
+      <span class="eyebrow">Estimation gratuite</span>
+      <h2 id="cta-title" set:html={titre} />
+      <p class="lead">{texte}</p>
+    </div>
+    <div class="btn-row cta-actions">
+      <a class="btn btn--brass" href={site.estimationAnchor}>Demander mon estimation</a>
+      {secondaire && <a class="btn btn--ghost" href={secondaire.href}>{secondaire.label}</a>}
+    </div>
+  </div>
+</section>
+<style>
+  .cta-in { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+  .cta-band h2 { max-width: 20ch; }
+  @media (max-width: 860px) { .cta-in { grid-template-columns: 1fr; align-items: start; } }
+</style>

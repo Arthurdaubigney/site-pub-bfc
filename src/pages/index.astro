@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Img from '../components/Img.astro';
+import Chevron from '../components/Chevron.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import EstimationSection from '../components/EstimationSection.astro';
+import { maisons } from '../data/maisons';
+import { specialites } from '../data/specialites';
+import { villes } from '../data/villes';
+import { departements, site } from '../data/site';
+import { faqGenerale } from '../data/faq';
+import { faqSchema } from '../lib/schema';
+import { photo } from '../data/photos';
+
+---
+<Layout
+  title="Antiquaire & expert d’art en Bourgogne-Franche-Comté"
+  description="Maison d’antiquaires : estimation gratuite à domicile, rachat de succession, mobilier d’époque, argenterie, tableaux et faïence à Dijon, Besançon, Nevers."
+  jsonLd={[faqSchema(faqGenerale.slice(0, 6))]}
+>
+  <!-- HERO -->
+  <section class="hero on-dark" data-enter>
+    <Img slug="chateau-chambre" eager class="hero-img" sizes="100vw" widths={[800, 1280, 1920]} position="50% 40%" />
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-in">
+      <span class="eyebrow t-stagger-line">Antiquaires &amp; expertise d’art</span>
+      <h1 class="t-stagger-line">Antiquaires et experts d’art en <em>Bourgogne-Franche-Comté</em></h1>
+      <p class="hero-lead t-stagger-line">Estimation gratuite à domicile, rachat de successions et expertise de mobilier d’époque, tableaux, argenterie, faïences et caves, de Dijon à Belfort.</p>
+      <div class="btn-row t-stagger-line">
+        <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>
+        <a class="btn btn--ghost" href="/maisons/">Découvrir nos 4 maisons</a>
+      </div>
+      <p class="hero-fact t-stagger-line"><strong>4 maisons régionales</strong> · <strong>8 départements</strong> · déplacement gratuit à domicile</p>
+    </div>
+  </section>
+
+  <!-- MAISONS -->
+  <section class="section" aria-labelledby="maisons-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Un réseau d’experts, quatre maisons</span>
+        <h2 id="maisons-title">Quatre maisons régionales, <em>une seule exigence</em></h2>
+        <p class="lead">Chaque maison connaît son terroir, ses fonds de familles, ses ateliers et ses marchés. Vous êtes toujours reçu par l’expert le plus proche de chez vous.</p>
+      </div>
+      <div class="grid grid--2 maisons-grid">
+        {maisons.map((m) => (
+          <a class="card" href={`/maisons/${m.slug}/`}>
+            <Img slug={m.photo} sizes="(max-width: 640px) 100vw, 50vw" />
+            <div class="card-body">
+              <span class="eyebrow">Maison {m.numero} · {m.departements.join(' · ')}</span>
+              <h3>{m.court}</h3>
+              <p>{m.accroche}</p>
+              <span class="link-arrow"><span class="u">Découvrir la maison</span><Chevron /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Steps />
+
+  <!-- SPÉCIALITÉS -->
+  <section class="section section--tint" aria-labelledby="spec-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Domaines d’expertise</span>
+        <h2 id="spec-title">Sept spécialités, <em>un œil exercé</em></h2>
+        <p class="lead">Mobilier d’époque, argenterie, tableaux anciens, faïence de Nevers, horloges comtoises, grands crus de garde et objets de curiosité.</p>
+      </div>
+      <div class="grid grid--3">
+        {specialites.slice(0, 6).map((s) => (
+          <a class="card" href={`/specialites/${s.slug}/`}>
+            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw" />
+            <div class="card-body">
+              <h3>{s.nom}</h3>
+              <p>{s.accroche}</p>
+              <span class="link-arrow"><span class="u">Voir la spécialité</span><Chevron /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="more"><a class="link-arrow" href="/specialites/"><span class="u">Toutes les spécialités, dont les objets de curiosité</span><Chevron /></a></p>
+    </div>
+  </section>
+
+  <!-- SUCCESSIONS -->
+  <section class="section" aria-labelledby="succ-title">
+    <div class="wrap split">
+      <Img slug="decor-peint-chateau" sizes="(max-width: 860px) 100vw, 45vw" />
+      <div>
+        <span class="eyebrow">Successions &amp; partages</span>
+        <h2 id="succ-title">Une succession, <em>avec tact et méthode</em></h2>
+        <p class="lead">Inventaire sur place, estimation écrite recevable par les notaires, et, si vous le souhaitez, rachat de tout ou partie des biens.</p>
+        <ul class="ticks">
+          <li>Inventaire pièce par pièce de la maison, des dépendances et de la cave</li>
+          <li>Rapport écrit utilisable pour le partage et la déclaration de succession</li>
+          <li>Offre de rachat distincte de l’estimation, jamais obligatoire</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="/rachat-succession-antiquites/">Racheter une succession</a>
+          <a class="link-arrow" href={site.estimationAnchor}><span class="u">Estimation gratuite</span><Chevron /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERRITOIRE (moment typographique) -->
+  <section class="section section--wine zones on-dark" aria-labelledby="zones-title">
+    <div class="wrap">
+      <span class="eyebrow">Notre territoire</span>
+      <h2 id="zones-title" class="zones-title">Du Morvan au Jura, <em>de Dijon à Belfort</em></h2>
+      <p class="lead">Nous nous déplaçons dans les huit départements de la région et dans les départements limitrophes.</p>
+      <ul class="zones-dep">
+        {departements.map((d) => <li><span>{d.code}</span>{d.nom}</li>)}
+      </ul>
+      <ul class="chips zones-cities">
+        {villes.map((v) => <li><a href={`/antiquaire/${v.slug}/`}>{v.nom}</a></li>)}
+      </ul>
+      <div class="btn-row"><a class="btn btn--brass" href="/zones-intervention/">Voir toutes les zones d’intervention</a></div>
+    </div>
+  </section>
+
+  <Faq items={faqGenerale.slice(0, 6)} />
+
+  <EstimationSection source="accueil" />
+</Layout>
+
+<style>
+  .hero { position: relative; min-height: min(100svh, 920px); display: grid; align-items: end; overflow: hidden; color: var(--stone); background: var(--wine-deep); }
+  :global(.hero-img) { position: absolute; inset: 0; }
+  :global(.hero-img img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero-shade { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(74,21,27,.92) 0%, rgba(74,21,27,.72) 42%, rgba(74,21,27,.18) 100%), linear-gradient(0deg, rgba(26,26,26,.55), transparent 40%); }
+  .hero-in { position: relative; padding-block: clamp(120px, 18vh, 200px) clamp(56px, 9vh, 96px); }
+  .hero h1 { color: var(--stone); max-width: 15ch; font-size: clamp(2.8rem, 6.6vw, 6rem); }
+  .hero h1 em { color: var(--brass); }
+  .hero-lead { font-size: clamp(1.05rem, 1.5vw, 1.25rem); max-width: 52ch; color: rgba(251,249,245,.9); }
+  .hero .btn-row { margin-top: 12px; }
+  .hero-fact { margin: 40px 0 0; padding-top: 22px; border-top: 1px solid rgba(251,249,245,.28); font-size: .9rem; letter-spacing: .04em; max-width: none; color: rgba(251,249,245,.85); }
+  .hero-fact strong { color: var(--brass); font-weight: 600; }
+  .more { margin-top: 36px; }
+  .zones-title { font-size: clamp(2.6rem, 7vw, 6.5rem); max-width: 14ch; line-height: 1; }
+  .zones-dep { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 48px 0 36px; padding: 0; border-top: 1px solid rgba(251,249,245,.2); }
+  .zones-dep li { padding: 22px 0; border-bottom: 1px solid rgba(251,249,245,.2); font: 500 1.5rem/1.1 var(--font-display); color: var(--stone); }
+  .zones-dep li span { display: block; font: 600 .72rem/1 var(--font-body); letter-spacing: .2em; color: var(--brass); margin-bottom: 8px; }
+  .zones-cities { margin-bottom: 40px; }
+  .zones-cities a { color: var(--stone); background: transparent; border-color: rgba(251,249,245,.3); }
+  .zones-cities a:hover { background: var(--stone); color: var(--ink); border-color: var(--stone); }
+  @media (max-width: 860px) { .zones-dep { grid-template-columns: repeat(2, 1fr); } .hero { min-height: 92svh; } }
+</style>

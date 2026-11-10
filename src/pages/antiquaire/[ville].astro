@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Chevron from '../../components/Chevron.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { villes } from '../../data/villes';
+import { maisonBySlug } from '../../data/maisons';
+import { specialites } from '../../data/specialites';
+import { departements, site } from '../../data/site';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return villes.map((v) => ({ params: { ville: v.slug }, props: { v } }));
+}
+const { v } = Astro.props;
+const dep = departements.find((d) => d.code === v.departement)!;
+const maison = maisonBySlug(v.maison);
+const path = `/antiquaire/${v.slug}/`;
+const faq = [
+  { q: `L’estimation d’antiquités à ${v.nom} est-elle gratuite ?`, a: `Oui. Un expert de la ${maison.court} se déplace à ${v.nom} et dans ses environs pour une estimation à domicile gratuite et sans engagement, avec rapport écrit.` },
+  { q: `Rachetez-vous des successions à ${v.nom} et en ${dep.nom} ?`, a: `Oui. Nous inventorions et estimons mobilier, tableaux, argenterie, faïences, horloges et caves dans tout le département (${dep.code}), et pouvons racheter tout ou partie des biens si vous le souhaitez.` },
+  { q: `Quels objets expertisez-vous à ${v.nom} ?`, a: `Surtout : ${v.objets.join(', ')}. Mais toutes les catégories d’antiquités et d’objets d’art sont examinées.` },
+];
+const title = `Antiquaire à ${v.nom} : expertise et estimation gratuite`;
+const description = `Antiquaire expert à ${v.nom} (${dep.code}) : estimation gratuite à domicile, rachat de succession, mobilier, tableaux, argenterie, faïence.`;
+---
+<Layout
+  {title}
+  {description}
+  ogPhoto={v.photo}
+  jsonLd={[
+    serviceSchema({ name: `Expertise d’antiquités à ${v.nom}`, description, path, serviceType: 'Expertise et estimation d’antiquités' }),
+    faqSchema(faq),
+    breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Zones d’intervention', path: '/zones-intervention/' }, { name: v.nom, path }]),
+  ]}
+>
+  <Breadcrumbs items={[{ name: 'Zones d’intervention', path: '/zones-intervention/' }, { name: `Antiquaire à ${v.nom}` }]} />
+  <PageHero eyebrow={`${dep.nom} (${dep.code}) · ${maison.court}`} h1={`Antiquaire et expert d’art à ${v.nom} (${dep.code}) : estimation gratuite`} lead={v.accroche} photo={v.photo} secondary={{ label: `La ${maison.court}`, href: `/maisons/${maison.slug}/` }} />
+
+  <section class="section" aria-labelledby="pat-title">
+    <div class="wrap split">
+      <div class="prose">
+        <span class="eyebrow">Autour de {v.nom}</span>
+        <h2 id="pat-title">Un patrimoine à <em>faire estimer</em></h2>
+        <p>{v.patrimoine}</p>
+        <p>Nous intervenons à {v.nom} et dans les communes voisines : {v.alentours.join(', ')}.</p>
+        <p class="note"><strong>Conseil.</strong> {v.conseil}</p>
+        <a class="btn" href={site.estimationAnchor}>Estimation gratuite à {v.nom}</a>
+      </div>
+      <Img slug={v.photo} sizes="(max-width: 860px) 100vw, 45vw" />
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="obj-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Ce que l’on trouve ici</span>
+        <h2 id="obj-title">Objets fréquemment estimés <em>à {v.nom}</em></h2>
+      </div>
+      <ul class="chips big">{v.objets.map((o) => <li>{o}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="spec-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Nos expertises</span><h2 id="spec-title">Toutes les spécialités, <em>à votre porte</em></h2></div>
+      <div class="grid grid--4">
+        {specialites.slice(0, 4).map((s) => (
+          <a class="card" href={`/specialites/${s.slug}/`}>
+            <Img slug={s.photo} sizes="(max-width: 640px) 100vw, 25vw" />
+            <div class="card-body"><h3>{s.court}</h3><span class="link-arrow"><span class="u">En savoir plus</span><Chevron /></span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq} title={`Antiquaire à ${v.nom} : vos questions`} />
+  <CtaBand titre={`Un expert <em>à ${v.nom}</em> cette semaine`} />
+</Layout>
+<style>
+  .note { border-left: 2px solid var(--brass); padding: 4px 0 4px 20px; color: var(--ink); }
+  .big li { font: 500 1.35rem/1.2 var(--font-display); padding: 14px 24px; }
+</style>

@@ -1,0 +1,43 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Img from '../../components/Img.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+---
+<Layout
+  title="La Maison : expertise et déontologie d’antiquaires"
+  description="Découvrez la Maison Vergy : un réseau d’antiquaires et d’experts d’art en Bourgogne-Franche-Comté, attaché à l’indépendance et à la transparence."
+  ogPhoto="cabinet-curiosites"
+  jsonLd={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'La Maison', path: '/a-propos/' }])]}
+>
+  <Breadcrumbs items={[{ name: 'La Maison' }]} />
+  <PageHero eyebrow="La Maison" h1="Une maison d’antiquaires et d’experts d’art ancrée en Bourgogne-Franche-Comté" lead="Quatre maisons régionales, un même regard : celui d’experts qui aiment les objets, respectent les familles et disent toujours ce qu’ils voient." photo="vitrine-ancienne" />
+  <section class="section" aria-labelledby="val-title">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Nos engagements</span><h2 id="val-title">Quatre principes <em>non négociables</em></h2></div>
+      <div class="grid grid--4 vals">
+        <article><h3>Indépendance</h3><p>L’estimation est distincte de toute offre de rachat et reste valable quelle que soit votre décision.</p></article>
+        <article><h3>Transparence</h3><p>Chaque avis est écrit, argumenté, illustré. Nous distinguons toujours le certain du probable.</p></article>
+        <article><h3>Discrétion</h3><p>Successions, collections, caves : vos informations restent confidentielles.</p></article>
+        <article><h3>Proximité</h3><p>Un expert qui connaît votre territoire, vos fonds de famille et les marchés locaux.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section section--tint" aria-labelledby="hist-title">
+    <div class="wrap split">
+      <Img slug="cabinet-curiosites-2" sizes="(max-width: 860px) 100vw, 45vw" />
+      <div class="prose">
+        <span class="eyebrow">Notre regard</span>
+        <h2 id="hist-title">Le goût des <em>objets qui durent</em></h2>
+        <p>Du mobilier d’époque aux faïences de Nevers, des horloges comtoises aux grands crus de garde, la Bourgogne-Franche-Comté a produit, collectionné et conservé des objets de toute première qualité.</p>
+        <p>Notre métier consiste à les reconnaître, à les situer dans leur histoire et à aider leurs propriétaires à décider sereinement de leur avenir.</p>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Layout>
+<style>
+  .vals article { border-top: 1px solid var(--ink); padding-top: 18px; }
+</style>

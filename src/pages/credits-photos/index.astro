@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import credits from '../../assets/photos/credits.json';
+const rows = Object.entries(credits as Record<string, { by: string; licence: string; page: string; alt: string }>).sort(([a], [b]) => a.localeCompare(b));
+---
+<Layout title="Crédits photos | Maison Vergy" description="Crédits et licences des photographies du site, issues de Wikimedia Commons : auteurs, licences libres CC0, CC BY, CC BY-SA et domaine public." noindex>
+  <Breadcrumbs items={[{ name: 'Crédits photos' }]} />
+  <section class="section"><div class="wrap prose" style="max-width:900px">
+    <h1>Crédits photographiques</h1>
+    <p>Photographies issues de Wikimedia Commons, publiées sous licences libres (CC0, CC BY, CC BY-SA ou domaine public). Chaque image renvoie vers sa page d’origine.</p>
+    <ul class="credits">
+      {rows.map(([slug, c]) => <li><a href={c.page} rel="noopener">{slug.replace(/-/g, ' ')}</a> — {c.by}, {c.licence}</li>)}
+    </ul>
+  </div></section>
+</Layout>
+<style>.credits { padding-left: 18px; color: var(--ink-soft); font-size: .95rem; } .credits li { margin-bottom: 6px; }</style>

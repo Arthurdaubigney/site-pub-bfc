@@ -1,0 +1,51 @@
+---
+import { site, departements } from '../data/site';
+import { maisons } from '../data/maisons';
+import { specialites } from '../data/specialites';
+import { villes } from '../data/villes';
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <p class="ftr-name">{site.name}</p>
+        <p>Maison d’antiquaires et d’expertise d’art au service des familles, des notaires et des collectionneurs de Bourgogne-Franche-Comté.</p>
+        <a class="btn btn--brass" href={site.estimationAnchor}>Estimation gratuite</a>
+      </div>
+      <nav aria-label="Nos maisons"><h2 class="ftr-h">Nos maisons</h2><ul>{maisons.map((m) => <li><a href={`/maisons/${m.slug}/`}>{m.court}</a></li>)}</ul></nav>
+      <nav aria-label="Spécialités"><h2 class="ftr-h">Spécialités</h2><ul>{specialites.map((s) => <li><a href={`/specialites/${s.slug}/`}>{s.court}</a></li>)}</ul></nav>
+      <nav aria-label="Villes"><h2 class="ftr-h">Nous intervenons à</h2><ul>{villes.slice(0, 10).map((v) => <li><a href={`/antiquaire/${v.slug}/`}>{v.nom}</a></li>)}<li><a href="/zones-intervention/">Toutes les zones →</a></li></ul></nav>
+    </div>
+    <p class="ftr-dep">Départements couverts : {departements.map((d) => `${d.nom} (${d.code})`).join(' · ')}.</p>
+    <div class="ftr-bottom">
+      <p>© {new Date().getFullYear()} {site.name}. Tous droits réservés.</p>
+      <ul>
+        <li><a href="/expertise-estimation-antiquites/">Expertise</a></li>
+        <li><a href="/rachat-succession-antiquites/">Successions</a></li>
+        <li><a href="/a-propos/">La Maison</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/mentions-legales/">Mentions légales</a></li>
+        <li><a href="/credits-photos/">Crédits photos</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<style>
+  .ftr { background: var(--wine-deep); color: rgba(251,249,245,.82); padding-block: clamp(56px, 8vw, 96px) 120px; font-size: .95rem; }
+  .ftr a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 300ms var(--ease-smooth-out), color 200ms; }
+  .ftr a:hover { color: var(--brass); background-size: 100% 1px; }
+  .ftr .btn { background: var(--brass); color: var(--ink); background-image: none; }
+  .ftr .btn:hover { color: var(--ink); background: #d4b06a; }
+  .ftr-top { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: clamp(28px, 4vw, 64px); }
+  .ftr-name { font: 600 2rem/1 var(--font-display); color: var(--stone); margin: 0 0 14px; }
+  .ftr-brand p { max-width: 36ch; }
+  .ftr-h { font: 600 .72rem/1 var(--font-body); letter-spacing: .22em; text-transform: uppercase; color: var(--brass); margin: 0 0 18px; }
+  .ftr ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .ftr nav li a { display: inline-block; padding: 6px 0; min-height: 32px; }
+  .ftr-dep { margin: 40px 0 0; padding-top: 28px; border-top: 1px solid rgba(251,249,245,.16); font-size: .85rem; max-width: none; }
+  .ftr-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: .85rem; }
+  .ftr-bottom p { margin: 0; }
+  .ftr-bottom ul { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  @media (max-width: 960px) { .ftr-top { grid-template-columns: 1fr 1fr; } .ftr-brand { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .ftr-top { grid-template-columns: 1fr; } }
+</style>
