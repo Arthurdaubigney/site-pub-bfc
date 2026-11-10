@@ -31,10 +31,10 @@ const faq = [
   title={m.title}
   description={m.description}
   ogPhoto={m.photo}
-  jsonLd={[maisonSchema(m.slug), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Nos maisons', path: '/maisons/' }, { name: m.court, path }])]}
+  jsonLd={[maisonSchema(m.slug), faqSchema(faq), breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: m.court, path }])]}
 >
-  <Breadcrumbs items={[{ name: 'Nos maisons', path: '/maisons/' }, { name: m.court }]} />
-  <PageHero eyebrow={`Maison ${m.numero} · ${deps.map((d) => `${d.nom} (${d.code})`).join(' · ')}`} h1={m.h1} lead={m.accroche} photo={m.photo} secondary={{ label: 'Toutes nos maisons', href: '/maisons/' }} />
+  <Breadcrumbs items={[{ name: m.court }]} />
+  <PageHero eyebrow={`Maison ${m.numero} · ${deps.map((d) => `${d.nom} (${d.code})`).join(' · ')}`} h1={m.h1} lead={m.accroche} photo={m.photo} secondary={{ label: 'Toutes nos maisons', href: '/#maisons' }} />
 
   <section class="section" aria-labelledby="intro-title">
     <div class="wrap split">

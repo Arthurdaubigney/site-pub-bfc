@@ -28,7 +28,7 @@ export const departements = [
 export const nav = [
   { label: 'Expertise', href: '/expertise-estimation-antiquites/' },
   { label: 'Spécialités', href: '/specialites/' },
-  { label: 'Nos maisons', href: '/maisons/' },
+  { label: 'Nos maisons', href: '/#maisons' },
   { label: 'Zones d’intervention', href: '/zones-intervention/' },
   { label: 'Successions', href: '/rachat-succession-antiquites/' },
 ];
