@@ -41,6 +41,9 @@ const meta = {
   'autun-rue': ['Rue piétonne d’Autun bordée de maisons anciennes en Saône-et-Loire', 'Rue ancienne d’Autun'],
   'autun-remparts': ['Remparts médiévaux et tour ronde d’Autun en pierre', 'Remparts d’Autun en Saône-et-Loire'],
   'belfort-lion': ['Lion de Belfort sculpté dans le grès rose au pied de la citadelle', 'Lion de Belfort, Territoire de Belfort'],
+  'tableau-nature-morte-fyt': ['Nature morte flamande du XVIIe siècle à l’huile sur toile : lièvres, gibier à plume et drap de velours rouge', 'Nature morte ancienne, huile sur toile du XVIIe siècle'],
+  'tableau-nature-morte-gibier': ['Nature morte au gibier : lièvre, canard et oiseaux sous un arbre, huile sur toile ancienne', 'Tableau ancien, nature morte au gibier'],
+  'tableau-paysage-huile': ['Paysage lacustre romantique du XIXe siècle à l’huile sur toile, voilier et grands arbres', 'Paysage ancien à l’huile sur toile'],
 } as const;
 
 export type PhotoSlug = keyof typeof meta;
