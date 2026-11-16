@@ -53,7 +53,7 @@ export const maisons: Maison[] = [
     villes: ['macon', 'chalon-sur-saone', 'autun'],
     zone: 'Mâcon, Chalon-sur-Saône, Autun et toute la Saône-et-Loire',
     photo: 'autun-rue',
-    photoSecondaire: 'macon-quai-lamartine',
+    photoSecondaire: 'macon-saone-saint-laurent',
     accroche: 'Du Mâconnais au Charolais, des bords de Saône aux remparts d’Autun.',
     title: 'Expert antiquités en Saône-et-Loire : Mâcon, Chalon',
     description: 'Estimation gratuite de mobilier, tableaux, argenterie et successions en Saône-et-Loire. Experts à Mâcon, Chalon-sur-Saône, Autun et Charolles.',

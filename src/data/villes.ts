@@ -15,7 +15,7 @@ export interface Ville {
 
 export const villes: Ville[] = [
   {
-    slug: 'dijon', nom: 'Dijon', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'dijon-hotel-aubriot',
+    slug: 'dijon', nom: 'Dijon', departement: '21', maison: 'cote-d-or-grands-crus', photo: 'dijon-place-bareuzai',
     alentours: ['Fontaine-lès-Dijon', 'Talant', 'Chenôve', 'Plombières-lès-Dijon', 'Is-sur-Tille'],
     accroche: 'Hôtels particuliers, appartements bourgeois et maisons de la banlieue résidentielle dijonnaise.',
     patrimoine: 'Ancienne capitale des ducs de Bourgogne, Dijon a conservé de nombreux hôtels particuliers et appartements de magistrats. On y trouve du mobilier Louis XV et Louis XVI, des pendules, des tableaux de l’école bourguignonne et de l’argenterie de table.',

@@ -239,12 +239,6 @@
   "page": "https://commons.wikimedia.org/wiki/File:William_Traies_-_,_Attribu%C3%A9_%C3%A0_Paysage_Huile_sur_toile_d%27origine,_petit_trou_et_petits_manques_Dimensions_25,5_x_30,5_cm.jpg",
   "alt": "William Traies - , Attribué à Paysage Huile sur toile d'origine, petit trou et petits manques Dimensions 25,5 x 30,5 cm"
  },
- "dijon-hotel-aubriot": {
-  "by": "Rilba",
-  "licence": "CC BY-SA 3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:H%C3%B4tel_Aubriot_2,_40_rue_des_Forges_%C3%A0_Dijon.JPG",
-  "alt": "Hôtel Aubriot 2, 40 rue des Forges à Dijon"
- },
  "nuits-saint-georges-matin": {
   "by": "Opsylac",
   "licence": "CC BY-SA 4.0",
@@ -262,12 +256,6 @@
   "licence": "CC0",
   "page": "https://commons.wikimedia.org/wiki/File:Une_vue_du_village_de_V%C3%A9zelay_en_novembre_2014.jpg",
   "alt": "Une vue du village de Vézelay en novembre 2014"
- },
- "macon-quai-lamartine": {
-  "by": "Chabe01",
-  "licence": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Quai_Lamartine_M%C3%A2con_4.jpg",
-  "alt": "Quai Lamartine Mâcon 4"
  },
  "nevers-palais-ducal": {
   "by": "Zairon",
@@ -358,5 +346,17 @@
   "licence": "CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Vougeot,_le_ch%C3%A2teau_du_Clos_de_Vougeot.jpg",
   "alt": "Vougeot, le château du Clos de Vougeot"
+ },
+ "macon-saone-saint-laurent": {
+  "by": "Chabe01",
+  "licence": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vue_Quais_depuis_St_Laurent_Sa%C3%B4ne_M%C3%A2con_3.jpg",
+  "alt": "Vue Quais depuis St Laurent Saône Mâcon 3"
+ },
+ "dijon-place-bareuzai": {
+  "by": "fr:Utilisateur:FRED",
+  "licence": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Place_du_Bareuzai.jpg",
+  "alt": "Place du Bareuzai"
  }
 }

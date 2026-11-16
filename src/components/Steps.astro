@@ -1,8 +1,9 @@
 ---
 import { photo, type PhotoSlug } from '../data/photos';
 import { Picture } from 'astro:assets';
-const steps: { n: string; titre: string; texte: string; photo: PhotoSlug }[] = [
-  { n: '01', titre: 'Vous décrivez', texte: 'Formulaire en deux minutes : nature des objets, commune, quelques photographies. Rien d’autre à préparer.', photo: 'decor-peint-chateau' },
+import { frameFor } from '../lib/frame';
+const steps: { n: string; titre: string; texte: string; photo: PhotoSlug; pos?: string }[] = [
+  { n: '01', titre: 'Vous décrivez', texte: 'Formulaire en deux minutes : nature des objets, commune, quelques photographies. Rien d’autre à préparer.', photo: 'decor-peint-chateau', pos: '50% 12%' },
   { n: '02', titre: 'Nous examinons', texte: 'Un expert de la maison la plus proche se déplace, observe les assemblages, les marques, la patine, l’état.', photo: 'tapisserie-aubusson' },
   { n: '03', titre: 'Vous recevez un rapport', texte: 'Estimation écrite et argumentée, avec photographies, valable pour une succession, un partage ou une assurance.', photo: 'chandelier-bronze' },
   { n: '04', titre: 'Vous décidez librement', texte: 'Conserver, transmettre, confier ou vendre : notre offre éventuelle est distincte de l’estimation, et sans pression.', photo: 'pendule-louis-xvi' },
@@ -18,8 +19,8 @@ const steps: { n: string; titre: string; texte: string; photo: PhotoSlug }[] = [
       <div class="steps-visual" aria-hidden="false">
         <div class="steps-stack">
           {steps.map((s, i) => (
-            <div class={`steps-img${i === 0 ? ' is-active' : ''}`} data-step-img={i}>
-              <Picture src={photo(s.photo).src} alt={photo(s.photo).alt} title={photo(s.photo).title} widths={[480, 800, 1000]} sizes="(max-width: 860px) 100vw, 45vw" formats={['avif', 'webp']} loading="lazy" />
+            <div class:list={['steps-img', i === 0 && 'is-active', frameFor(s.photo, 'card').mat && 'steps-img--mat']} data-step-img={i}>
+              <Picture src={photo(s.photo).src} alt={photo(s.photo).alt} title={photo(s.photo).title} widths={[480, 800, 1000]} sizes="(max-width: 860px) 100vw, 45vw" formats={['avif', 'webp']} loading="lazy" style={s.pos ? `object-position:${s.pos}` : undefined} />
             </div>
           ))}
         </div>
@@ -39,10 +40,12 @@ const steps: { n: string; titre: string; texte: string; photo: PhotoSlug }[] = [
 <style>
   .steps-grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 7vw, 110px); align-items: start; }
   .steps-visual { position: sticky; top: 110px; }
-  .steps-stack { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #0f1d14; }
+  .steps-stack { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0f1d14; }
   .steps-img { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); filter: blur(3px); transition: opacity 500ms var(--ease-smooth-out), transform 700ms var(--ease-smooth-out), filter 500ms var(--ease-smooth-out); }
   .steps-img.is-active { opacity: 1; transform: none; filter: none; }
   .steps-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .steps-img--mat { background: var(--stone-3); }
+  .steps-img.steps-img--mat :global(img) { object-fit: contain; padding: 5%; }
   .steps-list { list-style: none; margin: 0; padding: 0; display: grid; }
   .steps-list li { min-height: 52vh; display: flex; flex-direction: column; justify-content: center; padding-block: 28px; border-top: 1px solid rgba(251,249,245,.18); opacity: .38; transition: opacity 400ms var(--ease-smooth-out); }
   .steps-list li.is-active { opacity: 1; }
@@ -58,21 +61,37 @@ const steps: { n: string; titre: string; texte: string; photo: PhotoSlug }[] = [
 </style>
 <script>
   // Moment « photo-chapters » : l'image suit l'étape lue (seul mouvement lié au scroll du site)
-  const root = document.querySelector('[data-chapters]');
-  if (root && 'IntersectionObserver' in window) {
+  const root = document.querySelector<HTMLElement>('[data-chapters]');
+  if (root) {
     const items = [...root.querySelectorAll<HTMLElement>('[data-step]')];
     const imgs = [...root.querySelectorAll<HTMLElement>('[data-step-img]')];
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          const i = Number((e.target as HTMLElement).dataset.step);
-          items.forEach((el, k) => el.classList.toggle('is-active', k === i));
-          imgs.forEach((el, k) => el.classList.toggle('is-active', k === i));
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    );
-    items.forEach((el) => io.observe(el));
+    let current = -1;
+    const update = () => {
+      const mid = window.innerHeight / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const d = Math.abs((r.top + r.bottom) / 2 - mid);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      if (best === current) return;
+      current = best;
+      items.forEach((el, k) => el.classList.toggle('is-active', k === best));
+      imgs.forEach((el, k) => el.classList.toggle('is-active', k === best));
+    };
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; update(); });
+    };
+    // N'écoute le scroll que lorsque la section est à l'écran
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { addEventListener('scroll', onScroll, { passive: true }); update(); }
+        else removeEventListener('scroll', onScroll);
+      });
+    }, { rootMargin: '0px' }).observe(root);
   }
 </script>
