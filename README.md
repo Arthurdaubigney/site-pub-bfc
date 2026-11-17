@@ -1,4 +1,4 @@
-# Maison Vergy – site d'antiquaires et d'expertise d'art (Bourgogne-Franche-Comté)
+# Les Antiquités de Thomas – site d'antiquaires et d'expertise d'art (Bourgogne-Franche-Comté)
 
 Site statique multi-pages (Astro 5 + React pour le formulaire), optimisé SEO local.
 
@@ -14,7 +14,7 @@ npm run build:check  # build + contrôle SEO (title, description, h1, alt, JSON-
 
 1. **Formulaire Tally** : copier `.env.example` en `.env` et renseigner `PUBLIC_TALLY_FORM_ID`. Tant qu'il est vide, `src/components/TallyForm.tsx` affiche un placeholder.
 2. **Domaine** : `SITE_URL` (sitemap, canonical, JSON-LD) et `public/robots.txt`.
-3. **Marque** : le nom « Maison Vergy » est provisoire (`src/data/site.ts`) ; vérifier sa disponibilité ou le remplacer.
+3. **Marque** : « Les Antiquités de Thomas », définie en un seul endroit (`src/data/site.ts`).
 4. **Mentions légales** : compléter éditeur, hébergeur (`src/pages/mentions-legales`).
 5. **Photographies** : stand-ins libres de droits (Wikimedia Commons, crédits dans `/credits-photos/`) à remplacer par les photos du client dans `src/assets/photos/` (mêmes noms de fichiers) ; textes alt/title dans `src/data/photos.ts`.
 

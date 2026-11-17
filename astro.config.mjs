@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 // Remplacer par le domaine définitif avant la mise en production.
-const site = process.env.SITE_URL ?? 'https://www.maison-vergy.example';
+const site = process.env.SITE_URL ?? 'https://www.antiquites-de-thomas.example';
 
 export default defineConfig({
   site,

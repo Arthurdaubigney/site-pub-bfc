@@ -1,13 +1,13 @@
 /**
  * Configuration centrale du site.
- * Nom de marque provisoire : à remplacer en une seule ligne (et vérifier sa disponibilité).
+ * Nom de marque : à modifier ici uniquement.
  * Aucune coordonnée (adresse, téléphone) n'est inventée : le contact passe par le formulaire Tally.
  */
 export const site = {
-  name: 'Maison Vergy',
-  legalName: 'Maison Vergy – Antiquaires & Expertise d’Art',
+  name: 'Les Antiquités de Thomas',
+  legalName: 'Les Antiquités de Thomas – Antiquaires & Expertise d’Art',
   tagline: 'Antiquaires & expertise d’art en Bourgogne-Franche-Comté',
-  url: (import.meta.env.SITE_URL as string | undefined) ?? 'https://www.maison-vergy.example',
+  url: (import.meta.env.SITE_URL as string | undefined) ?? 'https://www.antiquites-de-thomas.example',
   locale: 'fr-FR',
   tallyFormId: (import.meta.env.PUBLIC_TALLY_FORM_ID as string | undefined) ?? '',
   contactPath: '/contact/',

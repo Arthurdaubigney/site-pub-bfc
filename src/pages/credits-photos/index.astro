@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import credits from '../../assets/photos/credits.json';
 const rows = Object.entries(credits as Record<string, { by: string; licence: string; page: string; alt: string }>).sort(([a], [b]) => a.localeCompare(b));
 ---
-<Layout title="Crédits photos | Maison Vergy" description="Crédits et licences des photographies du site, issues de Wikimedia Commons : auteurs, licences libres CC0, CC BY, CC BY-SA et domaine public." noindex>
+<Layout title="Crédits photos | Les Antiquités de Thomas" description="Crédits et licences des photographies du site, issues de Wikimedia Commons : auteurs, licences libres CC0, CC BY, CC BY-SA et domaine public." noindex>
   <Breadcrumbs items={[{ name: 'Crédits photos' }]} />
   <section class="section"><div class="wrap prose" style="max-width:900px">
     <h1>Crédits photographiques</h1>

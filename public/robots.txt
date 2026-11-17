@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.maison-vergy.example/sitemap-index.xml
+Sitemap: https://www.antiquites-de-thomas.example/sitemap-index.xml
