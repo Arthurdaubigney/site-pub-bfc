@@ -64,7 +64,7 @@ const meta = {
   'assiette-faience-revolutionnaire': ['Assiette en faïence à décor de trois personnages et inscription « vive la nation »', 'Assiette en faïence révolutionnaire'],
   'cuves-pressoir-vougeot': ['Cuvier du château du Clos de Vougeot : grandes cuves en chêne et pressoir à vis sous une charpente ancienne', 'Cuvier et pressoir du Clos de Vougeot'],
   'clos-de-vougeot': ['Château du Clos de Vougeot entouré de vignes, dans la Côte de Nuits', 'Château du Clos de Vougeot'],
-  'bijoux-broche-argent-strass': ['Broche ancienne en argent sertie de strass et de perles, en forme de bouquet de fleurs', 'Broche ancienne en argent, strass et perles'],
+  'bijoux-broche-strass-perles': ['Broche ancienne sertie de strass et de perles, en forme de bouquet de fleurs', 'Broche ancienne en strass et perles'],
   'bijoux-perles-vintage': ['Collier vintage de perles blanches à deux rangs torsadés sur fond bleu', 'Collier de perles vintage à deux rangs'],
   'bijoux-broche-art-deco': ['Broche Art déco géométrique noire, rouge et grise, tenue dans la main', 'Broche Art déco géométrique'],
 } as const;
