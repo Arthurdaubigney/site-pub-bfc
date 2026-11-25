@@ -19,15 +19,15 @@ const isActive = (href: string) => path === href || path.startsWith(href);
       <span class="sr-only">Menu</span><span class="bars" aria-hidden="true"><i></i><i></i></span>
     </button>
   </div>
-  <div class="mobile" id="mobile-menu" data-menu hidden>
-    <ul>
-      {nav.map((n) => (<li><a href={n.href}>{n.label}</a></li>))}
-      <li><a href="/a-propos/">La Maison</a></li>
-      <li><a href="/faq/">Questions fréquentes</a></li>
-    </ul>
-    <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>
-  </div>
 </header>
+<div class="mobile" id="mobile-menu" data-menu inert>
+  <ul>
+    {nav.map((n) => (<li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a></li>))}
+    <li><a href="/a-propos/">La Maison</a></li>
+    <li><a href="/faq/">Questions fréquentes</a></li>
+  </ul>
+  <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>
+</div>
 <style>
   .hdr { position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); transition: box-shadow var(--duration-fast) var(--ease-smooth-out); }
   .hdr.is-stuck { box-shadow: 0 12px 30px -22px rgba(26,26,26,.45); }
@@ -47,9 +47,21 @@ const isActive = (href: string) => path === href || path.startsWith(href);
   .bars i { display: block; height: 1.5px; background: var(--ink); transition: transform var(--duration-fast) var(--ease-smooth-out); }
   .menu-btn[aria-expanded='true'] .bars i:first-child { transform: translateY(3.75px) rotate(45deg); }
   .menu-btn[aria-expanded='true'] .bars i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
-  .mobile { position: fixed; inset: 77px 0 0 0; background: var(--stone); padding: 28px var(--gutter) 40px; overflow: auto; display: grid; align-content: start; gap: 28px; }
-  .mobile[hidden] { display: none; }
+  /* Menu mobile : frère du header (jamais enfant d'un élément à backdrop-filter, sinon position:fixed se calcule dans le header) */
+  .mobile { position: fixed; top: 77px; left: 0; right: 0; bottom: 0; z-index: 49; background: var(--stone); padding: 24px var(--gutter) calc(40px + env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; display: grid; align-content: start; gap: 28px;
+    visibility: hidden; opacity: 0; transform: translateY(-8px); pointer-events: none;
+    transition: opacity var(--duration-fast) ease-out, transform var(--duration-fast) var(--ease-smooth-out), visibility 0s linear var(--duration-fast); }
+  .mobile.is-open { visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
   .mobile ul { list-style: none; margin: 0; padding: 0; }
   .mobile li a { display: block; padding: 16px 0; border-bottom: 1px solid var(--line); text-decoration: none; font: 500 1.7rem/1.1 var(--font-display); }
+  .mobile li a[aria-current='page'] { color: var(--wine); }
+  .mobile li { opacity: 0; transform: translateY(8px); transition: opacity var(--duration-fast) ease-out, transform var(--duration-fast) var(--ease-smooth-out); }
+  .mobile.is-open li { opacity: 1; transform: none; }
+  .mobile.is-open li:nth-child(2) { transition-delay: 40ms; }
+  .mobile.is-open li:nth-child(3) { transition-delay: 80ms; }
+  .mobile.is-open li:nth-child(4) { transition-delay: 120ms; }
+  .mobile.is-open li:nth-child(5) { transition-delay: 160ms; }
+  .mobile.is-open li:nth-child(6) { transition-delay: 200ms; }
+  @media (min-width: 1061px) { .mobile { display: none; } }
   @media (max-width: 1060px) { .primary { display: none; } .menu-btn { display: grid; } .hdr-cta { display: none; } }
 </style>

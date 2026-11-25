@@ -72,18 +72,23 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
       addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-      // Menu mobile
+      // Menu mobile : ouverture animée, verrouillage du scroll, fermeture (Échap, lien, retour au bureau)
       const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
       const menu = document.querySelector<HTMLElement>('[data-menu]');
-      btn?.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') !== 'true';
+      const setMenu = (open: boolean) => {
+        if (!btn || !menu) return;
         btn.setAttribute('aria-expanded', String(open));
-        if (menu) menu.hidden = !open;
+        if (open && hdr) menu.style.top = `${hdr.offsetHeight}px`; // l'en-tête peut passer sur 2-3 lignes sur petit écran
+        menu.classList.toggle('is-open', open);
+        menu.toggleAttribute('inert', !open);
         document.body.style.overflow = open ? 'hidden' : '';
-      });
+      };
+      btn?.addEventListener('click', () => setMenu(btn.getAttribute('aria-expanded') !== 'true'));
+      menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
       addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') btn.click();
+        if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { setMenu(false); btn.focus(); }
       });
+      matchMedia('(min-width: 1061px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 
       // Accordéons (FAQ)
       document.querySelectorAll<HTMLElement>('[data-acc]').forEach((item) => {
