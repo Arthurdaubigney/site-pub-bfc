@@ -57,7 +57,7 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Header noCta={noCta} />
     <main id="contenu"><slot /></main>
-    <Footer />
+    <Footer noCta={noCta} />
     {!noCta && <MobileBar />}
     <script>
       // Entrée du hero : une seule fois au chargement (transitions.dev – texts reveal)

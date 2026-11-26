@@ -1,4 +1,6 @@
 ---
+interface Props { noCta?: boolean }
+const { noCta = false } = Astro.props;
 import { site, departements } from '../data/site';
 import { maisons } from '../data/maisons';
 import { specialites } from '../data/specialites';
@@ -10,7 +12,7 @@ import { villes } from '../data/villes';
       <div class="ftr-brand">
         <p class="ftr-name">{site.name}</p>
         <p>Maison d’antiquaires et d’expertise d’art au service des familles, des notaires et des collectionneurs de Bourgogne-Franche-Comté.</p>
-        <a class="btn btn--brass" href={site.estimationAnchor}>Estimation gratuite</a>
+        {!noCta && <a class="btn btn--brass" href={site.estimationAnchor}>Estimation gratuite</a>}
       </div>
       <nav aria-label="Nos maisons"><h2 class="ftr-h">Nos maisons</h2><ul>{maisons.map((m) => <li><a href={`/maisons/${m.slug}/`}>{m.court}</a></li>)}</ul></nav>
       <nav aria-label="Spécialités"><h2 class="ftr-h">Spécialités</h2><ul>{specialites.map((s) => <li><a href={`/specialites/${s.slug}/`}>{s.court}</a></li>)}</ul></nav>
