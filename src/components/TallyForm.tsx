@@ -9,6 +9,8 @@ interface Props {
   minHeight?: number;
   /** Identifiant de contexte transmis au formulaire (champ caché Tally « source »). */
   source?: string;
+  /** Page affichée après l'envoi du formulaire (en plus de la redirection réglée dans Tally). */
+  redirectTo?: string;
 }
 
 declare global {
@@ -44,6 +46,7 @@ export default function TallyForm({
   title = 'Formulaire de demande d’estimation gratuite',
   minHeight = 640,
   source = 'site',
+  redirectTo = '/merci/',
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -51,6 +54,23 @@ export default function TallyForm({
     if (!formId) return;
     loadTallyScript(() => window.Tally?.loadEmbeds());
   }, [formId]);
+
+  // Tally prévient la page parente à l'envoi (postMessage « Tally.FormSubmitted ») : on redirige vers /merci/
+  useEffect(() => {
+    if (!formId) return;
+    const onMessage = (e: MessageEvent) => {
+      if (!/^https:\/\/([a-z0-9-]+\.)?tally\.so$/.test(e.origin)) return;
+      let name: unknown = e.data;
+      if (typeof name === 'string') {
+        try { name = JSON.parse(name)?.event ?? name; } catch { /* message texte brut */ }
+      } else if (name && typeof name === 'object') {
+        name = (name as { event?: unknown }).event;
+      }
+      if (name === 'Tally.FormSubmitted') window.location.assign(redirectTo);
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [formId, redirectTo]);
 
   const src = formId
     ? `https://tally.so/embed/${formId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&source=${encodeURIComponent(source)}`

@@ -8,12 +8,24 @@ import { site } from '../../data/site';
   <section class="section"><div class="wrap prose" style="max-width:820px">
     <h1>Mentions légales</h1>
     <h2>Éditeur du site</h2>
-    <p>{site.legalName}, site internet antiquites-de-thomas.fr. Forme juridique, capital, numéro d’immatriculation, adresse du siège et directeur de la publication : <strong>à compléter avant la mise en ligne</strong>.</p>
+    <p>Le site <strong>antiquites-de-thomas.fr</strong> (nom commercial : {site.name}) est édité par :</p>
+    <ul class="legal">
+      <li><strong>Monsieur François SECULA</strong>, entrepreneur individuel</li>
+      <li>Adresse : 21 rue du Docteur Tassin, 21200 Beaune</li>
+      <li>SIREN : 529 601 486 · SIRET (siège) : 529 601 486 00010</li>
+      <li>N° de TVA intracommunautaire : FR51 529 601 486</li>
+      <li>E-mail : <a href="mailto:francoisseculapub@gmail.com">francoisseculapub@gmail.com</a></li>
+      <li>Directeur de la publication : François SECULA</li>
+    </ul>
     <h2>Hébergement</h2>
     <p>Hébergeur et coordonnées : à compléter selon le prestataire retenu.</p>
     <h2>Données personnelles</h2>
-    <p>Les informations transmises via le formulaire d’estimation (Tally) servent uniquement à traiter votre demande. Elles ne sont ni revendues ni cédées. Vous disposez d’un droit d’accès, de rectification et de suppression en nous écrivant via le formulaire de contact.</p>
+    <p>Les informations transmises via le formulaire d’estimation (Tally) servent uniquement à traiter votre demande. Elles ne sont ni revendues ni cédées. Vous disposez d’un droit d’accès, de rectification et de suppression en nous écrivant à l’adresse e-mail indiquée ci-dessus.</p>
     <h2>Propriété intellectuelle</h2>
     <p>Les textes du site sont la propriété de l’éditeur. Les photographies proviennent de Wikimedia Commons sous licences libres ; leurs auteurs sont crédités sur la page <a href="/credits-photos/">Crédits photos</a>.</p>
   </div></section>
 </Layout>
+<style>
+  .legal { list-style: none; margin: 0 0 1.4em; padding: 0; display: grid; gap: 8px; color: var(--ink-soft); }
+  .legal a { color: var(--wine); }
+</style>

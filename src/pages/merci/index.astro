@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Chevron from '../../components/Chevron.astro';
+---
+<Layout
+  title="Merci, votre demande d’estimation est envoyée"
+  description="Votre demande d’estimation gratuite a bien été transmise : un expert de la maison la plus proche vous recontacte pour fixer un rendez-vous."
+  noindex
+>
+  <section class="section merci" data-enter>
+    <div class="wrap merci-in">
+      <span class="check t-stagger-line" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="22" /><path d="M14 25l7 7 13-15" /></svg>
+      </span>
+      <span class="eyebrow t-stagger-line">Demande reçue</span>
+      <h1 class="t-stagger-line">Merci, votre demande d’estimation est <em>bien envoyée</em></h1>
+      <p class="lead t-stagger-line">Un expert de la maison la plus proche de chez vous étudie votre message et vous recontacte pour convenir d’un rendez-vous, à votre domicile si vous le souhaitez.</p>
+
+      <ol class="next t-stagger-line">
+        <li><span>01</span><strong>Lecture de votre demande</strong><p>Nous regardons vos objets, vos photographies et votre localisation.</p></li>
+        <li><span>02</span><strong>Prise de contact</strong><p>Un expert vous appelle ou vous écrit pour préciser vos objets et fixer un rendez-vous.</p></li>
+        <li><span>03</span><strong>Estimation écrite</strong><p>Gratuite et sans engagement, indépendante de toute offre de rachat.</p></li>
+      </ol>
+
+      <p class="tip t-stagger-line"><strong>En attendant,</strong> ne nettoyez, ne restaurez et ne déplacez aucune pièce, et rassemblez factures, certificats et notes de famille.</p>
+
+      <div class="btn-row t-stagger-line">
+        <a class="btn" href="/">Retour à l’accueil</a>
+        <a class="link-arrow" href="/specialites/"><span class="u">Découvrir nos spécialités</span><Chevron /></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+<style>
+  .merci { background: var(--stone-2); min-height: 70svh; display: grid; align-items: center; }
+  .merci-in { max-width: 820px; }
+  .check { display: inline-flex; color: var(--brass-deep); margin-bottom: 18px; }
+  .merci h1 { font-size: clamp(2.2rem, 4.6vw, 4rem); }
+  .next { list-style: none; margin: 36px 0 28px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .next li { border-top: 1px solid var(--ink); padding-top: 16px; }
+  .next li span { font: 500 2rem/1 var(--font-display); color: var(--brass-deep); display: block; margin-bottom: 6px; }
+  .next li strong { font: 500 1.35rem/1.2 var(--font-display); display: block; margin-bottom: 6px; }
+  .next li p { font-size: .95rem; color: var(--ink-soft); margin: 0; }
+  .tip { border-left: 2px solid var(--brass); padding: 4px 0 4px 20px; color: var(--ink); margin-bottom: 32px; }
+  @media (max-width: 760px) { .next { grid-template-columns: 1fr; gap: 18px; } }
+</style>

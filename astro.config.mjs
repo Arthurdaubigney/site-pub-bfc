@@ -9,6 +9,6 @@ export default defineConfig({
   site,
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({ filter: (page) => !/\/(merci|mentions-legales|credits-photos)\/$/.test(page) })],
   image: { layout: 'constrained' },
 });
