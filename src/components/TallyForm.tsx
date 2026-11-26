@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 interface Props {
-  /** ID du formulaire Tally (https://tally.so/r/<ID>). Par défaut : PUBLIC_TALLY_FORM_ID. */
+  /** ID du formulaire Tally (https://tally.so/r/<ID>). Par défaut : PUBLIC_TALLY_FORM_ID, sinon le formulaire du site. */
   formId?: string;
   /** Titre accessible de l'iframe. */
   title?: string;
@@ -20,6 +20,8 @@ declare global {
 }
 
 const EMBED_SRC = 'https://tally.so/widgets/embed.js';
+/** Formulaire Tally du site : https://tally.so/r/6DNjdB */
+const DEFAULT_FORM_ID = '6DNjdB';
 
 function loadTallyScript(onReady: () => void) {
   if (window.Tally) return onReady();
@@ -42,7 +44,7 @@ function loadTallyScript(onReady: () => void) {
  * - Avec ID : iframe lazy + auto-hauteur (script officiel Tally).
  */
 export default function TallyForm({
-  formId = import.meta.env.PUBLIC_TALLY_FORM_ID ?? '',
+  formId = import.meta.env.PUBLIC_TALLY_FORM_ID || DEFAULT_FORM_ID,
   title = 'Formulaire de demande d’estimation gratuite',
   minHeight = 640,
   source = 'site',

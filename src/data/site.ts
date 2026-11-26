@@ -9,7 +9,7 @@ export const site = {
   tagline: 'Antiquaires & expertise d’art en Bourgogne-Franche-Comté',
   url: (import.meta.env.SITE_URL as string | undefined) ?? 'https://antiquites-de-thomas.fr',
   locale: 'fr-FR',
-  tallyFormId: (import.meta.env.PUBLIC_TALLY_FORM_ID as string | undefined) ?? '',
+  tallyFormId: (import.meta.env.PUBLIC_TALLY_FORM_ID as string | undefined) || '6DNjdB',
   contactPath: '/contact/',
   estimationAnchor: '/contact/#estimation',
 };

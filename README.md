@@ -12,7 +12,7 @@ npm run build:check  # build + contrôle SEO (title, description, h1, alt, JSON-
 
 ## À configurer avant mise en ligne
 
-1. **Formulaire Tally** : copier `.env.example` en `.env` et renseigner `PUBLIC_TALLY_FORM_ID`. Tant qu'il est vide, `src/components/TallyForm.tsx` affiche un placeholder.
+1. **Formulaire Tally** : le formulaire https://tally.so/r/6DNjdB est branché par défaut (`src/components/TallyForm.tsx`). `PUBLIC_TALLY_FORM_ID` permet d'en utiliser un autre. À l'envoi, le visiteur est redirigé vers `/merci/` ; dans Tally, on peut aussi régler « Redirect on completion » sur `https://antiquites-de-thomas.fr/merci/`.
 2. **Domaine** : `antiquites-de-thomas.fr` est le domaine par défaut (`SITE_URL` pour le surcharger ; sitemap, canonical, JSON-LD et `public/robots.txt`). Si l'hébergement impose une variable `SITE_URL` différente, la supprimer ou la mettre à `https://antiquites-de-thomas.fr`.
 3. **Marque** : « Les Antiquités de Thomas », définie en un seul endroit (`src/data/site.ts`).
 4. **Mentions légales** : compléter éditeur, hébergeur (`src/pages/mentions-legales`).

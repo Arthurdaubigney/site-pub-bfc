@@ -3,9 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 import Chevron from '../../components/Chevron.astro';
 ---
 <Layout
-  title="Merci, votre demande d’estimation est envoyée"
-  description="Votre demande d’estimation gratuite a bien été transmise : un expert de la maison la plus proche vous recontacte pour fixer un rendez-vous."
+  title="Merci, votre demande est bien envoyée"
+  description="Votre demande a bien été transmise. Une seule demande suffit : merci de ne pas renvoyer le formulaire plusieurs fois, pour éviter qu’il soit classé en spam."
   noindex
+  noCta
 >
   <section class="section merci" data-enter>
     <div class="wrap merci-in">
@@ -13,14 +14,19 @@ import Chevron from '../../components/Chevron.astro';
         <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="22" /><path d="M14 25l7 7 13-15" /></svg>
       </span>
       <span class="eyebrow t-stagger-line">Demande reçue</span>
-      <h1 class="t-stagger-line">Merci, votre demande d’estimation est <em>bien envoyée</em></h1>
-      <p class="lead t-stagger-line">Un expert de la maison la plus proche de chez vous étudie votre message et vous recontacte pour convenir d’un rendez-vous, à votre domicile si vous le souhaitez.</p>
+      <h1 class="t-stagger-line">Merci, votre demande est <em>bien envoyée</em></h1>
+      <p class="lead t-stagger-line">Nous avons bien reçu votre message. Un expert de la maison la plus proche de chez vous le lit et revient vers vous dès que possible.</p>
 
       <ol class="next t-stagger-line">
         <li><span>01</span><strong>Lecture de votre demande</strong><p>Nous regardons vos objets, vos photographies et votre localisation.</p></li>
-        <li><span>02</span><strong>Prise de contact</strong><p>Un expert vous appelle ou vous écrit pour préciser vos objets et fixer un rendez-vous.</p></li>
-        <li><span>03</span><strong>Estimation écrite</strong><p>Gratuite et sans engagement, indépendante de toute offre de rachat.</p></li>
+        <li><span>02</span><strong>Prise de contact</strong><p>Un expert vous appelle ou vous écrit pour en savoir plus sur vos objets.</p></li>
+        <li><span>03</span><strong>Suite à donner</strong><p>Nous convenons ensemble de la suite : échange de photographies, appel ou rendez-vous.</p></li>
       </ol>
+
+      <aside class="notice t-stagger-line" role="note" aria-labelledby="notice-title">
+        <strong id="notice-title">Une seule demande suffit</strong>
+        <p>Merci de ne pas renvoyer le formulaire plusieurs fois : les envois en double risquent d’être classés en spam et retardent le traitement de votre demande. Si vous avez oublié une information, répondez simplement à l’expert quand il vous contacte.</p>
+      </aside>
 
       <p class="tip t-stagger-line"><strong>En attendant,</strong> ne nettoyez, ne restaurez et ne déplacez aucune pièce, et rassemblez factures, certificats et notes de famille.</p>
 
@@ -41,6 +47,9 @@ import Chevron from '../../components/Chevron.astro';
   .next li span { font: 500 2rem/1 var(--font-display); color: var(--brass-deep); display: block; margin-bottom: 6px; }
   .next li strong { font: 500 1.35rem/1.2 var(--font-display); display: block; margin-bottom: 6px; }
   .next li p { font-size: .95rem; color: var(--ink-soft); margin: 0; }
+  .notice { background: var(--stone); border: 1px solid var(--brass); border-left-width: 4px; padding: 18px 22px; margin-bottom: 22px; }
+  .notice strong { font: 500 1.35rem/1.2 var(--font-display); display: block; margin-bottom: 4px; }
+  .notice p { margin: 0; font-size: .97rem; color: var(--ink-soft); }
   .tip { border-left: 2px solid var(--brass); padding: 4px 0 4px 20px; color: var(--ink); margin-bottom: 32px; }
   @media (max-width: 760px) { .next { grid-template-columns: 1fr; gap: 18px; } }
 </style>

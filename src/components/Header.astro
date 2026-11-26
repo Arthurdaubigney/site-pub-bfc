@@ -1,5 +1,7 @@
 ---
 import { nav, site } from '../data/site';
+interface Props { noCta?: boolean }
+const { noCta = false } = Astro.props;
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(href);
 ---
@@ -14,7 +16,7 @@ const isActive = (href: string) => path === href || path.startsWith(href);
         {nav.map((n) => (<li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}><span class="u">{n.label}</span></a></li>))}
       </ul>
     </nav>
-    <a class="btn btn--brass hdr-cta" href={site.estimationAnchor}>Estimation gratuite</a>
+    {!noCta && <a class="btn btn--brass hdr-cta" href={site.estimationAnchor}>Estimation gratuite</a>}
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-btn>
       <span class="sr-only">Menu</span><span class="bars" aria-hidden="true"><i></i><i></i></span>
     </button>
@@ -26,7 +28,7 @@ const isActive = (href: string) => path === href || path.startsWith(href);
     <li><a href="/a-propos/">La Maison</a></li>
     <li><a href="/faq/">Questions fréquentes</a></li>
   </ul>
-  <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>
+  {!noCta && <a class="btn btn--brass" href={site.estimationAnchor}>Demander une estimation gratuite</a>}
 </div>
 <style>
   .hdr { position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); transition: box-shadow var(--duration-fast) var(--ease-smooth-out); }

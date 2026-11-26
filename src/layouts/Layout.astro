@@ -15,8 +15,10 @@ interface Props {
   jsonLd?: object[];
   noindex?: boolean;
   preloadHero?: boolean;
+  /** Masque les boutons d'appel à l'action (page de remerciement). */
+  noCta?: boolean;
 }
-const { title, description, ogPhoto = 'chateau-chambre', jsonLd = [], noindex = false } = Astro.props;
+const { title, description, ogPhoto = 'chateau-chambre', jsonLd = [], noindex = false, noCta = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 const og = await getImage({ src: photo(ogPhoto).src, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
 const ogUrl = new URL(og.src, site.url).toString();
@@ -53,10 +55,10 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
   </head>
   <body>
     <a class="skip" href="#contenu">Aller au contenu</a>
-    <Header />
+    <Header noCta={noCta} />
     <main id="contenu"><slot /></main>
     <Footer />
-    <MobileBar />
+    {!noCta && <MobileBar />}
     <script>
       // Entrée du hero : une seule fois au chargement (transitions.dev – texts reveal)
       requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll('[data-enter]').forEach((el) => el.classList.add('is-shown'))));

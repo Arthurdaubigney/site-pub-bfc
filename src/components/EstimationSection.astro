@@ -15,6 +15,7 @@ const H = h;
         <li>Déplacement à domicile partout en Bourgogne-Franche-Comté</li>
         <li>Confidentialité totale pour les successions et les partages</li>
       </ul>
+      <p class="est-note"><strong>Une seule demande suffit.</strong> Merci de ne pas renvoyer le formulaire plusieurs fois : les envois en double risquent d’être classés en spam.</p>
     </div>
     <div class="est-form"><TallyForm client:visible source={source} /></div>
   </div>
@@ -23,5 +24,7 @@ const H = h;
   .est { background: var(--stone-2); }
   .est-in { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
   .est-text { position: sticky; top: 110px; }
+  .est-note { border-left: 2px solid var(--brass); padding: 4px 0 4px 18px; font-size: .95rem; color: var(--ink-soft); max-width: 46ch; }
+  .est-note strong { color: var(--ink); }
   @media (max-width: 960px) { .est-in { grid-template-columns: 1fr; } .est-text { position: static; } }
 </style>
