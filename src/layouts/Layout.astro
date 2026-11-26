@@ -34,6 +34,9 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
     <link rel="canonical" href={canonical} />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
     <meta name="google-site-verification" content="XTFH7_9M4i6Ol2hJtHDvRffVk6i-sE910KZX22-qZL8" />
+    <!-- Google Ads (balise Google gtag.js) -->
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.adsId}`}></script>
+    <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.adsId}');`} />
     <meta name="theme-color" content="#581c25" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
