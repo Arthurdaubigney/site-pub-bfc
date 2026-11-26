@@ -66,11 +66,17 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
       // Header : ombre au scroll + barre CTA mobile après le premier écran
       const hdr = document.querySelector<HTMLElement>('[data-header]');
       const mbar = document.querySelector<HTMLElement>('[data-mbar]');
+      // La barre CTA mobile se masque dès que le formulaire est à l'écran (elle le recouvrirait)
+      let formVisible = false;
       const onScroll = () => {
         const y = window.scrollY;
         hdr?.classList.toggle('is-stuck', y > 8);
-        mbar?.classList.toggle('is-on', y > window.innerHeight * 0.7 && !document.querySelector('[data-tally-container]:hover'));
+        mbar?.classList.toggle('is-on', y > window.innerHeight * 0.7 && !formVisible);
       };
+      const est = document.querySelector('#estimation');
+      if (est && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([e]) => { formVisible = e.isIntersecting; onScroll(); }).observe(est);
+      }
       addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 

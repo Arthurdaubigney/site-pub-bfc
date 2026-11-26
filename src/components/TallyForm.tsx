@@ -41,20 +41,28 @@ function loadTallyScript(onReady: () => void) {
 /**
  * Conteneur responsive du formulaire d'estimation Tally.
  * - Sans ID : affiche un placeholder élégant et documenté (à remplacer en renseignant PUBLIC_TALLY_FORM_ID).
- * - Avec ID : iframe lazy + auto-hauteur (script officiel Tally).
+ * - Avec ID : iframe lazy + auto-hauteur. Le script officiel de Tally ne redimensionne que les
+ *   iframes qui portent `data-tally-src` et n'ont PAS d'attribut `src` : ne jamais ajouter `src` ici.
  */
 export default function TallyForm({
   formId = import.meta.env.PUBLIC_TALLY_FORM_ID || DEFAULT_FORM_ID,
   title = 'Formulaire de demande d’estimation gratuite',
-  minHeight = 640,
+  minHeight = 520,
   source = 'site',
   redirectTo = '/merci/',
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (!formId) return;
     loadTallyScript(() => window.Tally?.loadEmbeds());
+    // Secours : si le script Tally est bloqué (bloqueur de pub, réseau), on charge l'iframe nous-mêmes (défilement interne).
+    const t = window.setTimeout(() => {
+      const f = frameRef.current;
+      if (f && !f.getAttribute('src')) f.setAttribute('src', f.dataset.tallySrc ?? '');
+    }, 6000);
+    return () => window.clearTimeout(t);
   }, [formId]);
 
   // Tally prévient la page parente à l'envoi (postMessage « Tally.FormSubmitted ») : on redirige vers /merci/
@@ -82,8 +90,8 @@ export default function TallyForm({
     <div className="tally" ref={ref} data-tally-container style={{ ['--tally-min' as string]: `${minHeight}px` }}>
       {formId ? (
         <iframe
+          ref={frameRef}
           data-tally-src={src}
-          src={src}
           loading="lazy"
           width="100%"
           height={minHeight}
@@ -108,8 +116,8 @@ export default function TallyForm({
         </div>
       )}
       <style>{`
-        .tally { width: 100%; min-height: var(--tally-min); background: var(--stone); border: 1px solid var(--line); position: relative; }
-        .tally iframe { display: block; width: 100%; border: 0; min-height: var(--tally-min); }
+        .tally { width: 100%; min-height: var(--tally-min); background: var(--stone); border: 1px solid var(--line); position: relative; padding: clamp(6px, 1.6vw, 14px); }
+        .tally iframe { display: block; width: 100%; border: 0; min-height: calc(var(--tally-min) - 28px); background: transparent; color-scheme: light; }
         .tally-placeholder { min-height: var(--tally-min); display: grid; align-content: center; justify-items: start; gap: 10px; padding: clamp(28px, 6vw, 64px); background: repeating-linear-gradient(135deg, transparent 0 22px, rgba(197,160,89,.08) 22px 23px); }
         .tally-title { margin: 0; font: 500 1.75rem/1.1 var(--font-display); }
         .tally-placeholder p { color: var(--ink-soft); max-width: 46ch; }
