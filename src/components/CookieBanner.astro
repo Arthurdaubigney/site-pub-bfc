@@ -1,0 +1,75 @@
+---
+// Bandeau de consentement (CNIL) : refuser aussi simple qu'accepter, choix conservé 6 mois, modifiable depuis le pied de page.
+// La balise Google Ads n'est chargée qu'après accord (voir Layout.astro : window.__consent / window.loadAds).
+---
+<div class="cb" id="cookie-banner" role="dialog" aria-labelledby="cb-title" aria-describedby="cb-text" hidden>
+  <p class="cb-title" id="cb-title">Cookies et mesure publicitaire</p>
+  <p class="cb-text" id="cb-text">
+    Nous utilisons un cookie Google Ads pour mesurer l’efficacité de nos annonces. Il n’est déposé qu’avec votre accord,
+    que vous pouvez retirer à tout moment. <a href="/mentions-legales/#cookies">En savoir plus</a>
+  </p>
+  <div class="cb-actions">
+    <button type="button" class="cb-btn" data-cb="denied">Tout refuser</button>
+    <button type="button" class="cb-btn" data-cb="granted">Tout accepter</button>
+  </div>
+</div>
+<style>
+  .cb { position: fixed; z-index: 70; left: 20px; bottom: 20px; width: min(460px, calc(100vw - 40px)); background: var(--stone); color: var(--ink); border: 1px solid var(--ink); box-shadow: 0 22px 50px -20px rgba(26, 26, 26, .5); padding: 20px 22px 22px;
+    opacity: 0; transform: translateY(12px); transition: opacity var(--duration-fast) var(--ease-smooth-out), transform var(--duration-fast) var(--ease-smooth-out); }
+  .cb[hidden] { display: none; }
+  .cb.is-on { opacity: 1; transform: none; }
+  .cb-title { font: 500 1.35rem/1.2 var(--font-display); margin: 0 0 6px; }
+  .cb-text { font-size: .9rem; line-height: 1.55; margin: 0 0 16px; color: var(--ink-soft); }
+  .cb-text a { color: var(--wine); }
+  .cb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* Deux boutons strictement identiques : le refus est aussi visible que l'acceptation */
+  .cb-btn { min-height: 48px; padding: 12px 14px; background: var(--stone); color: var(--ink); border: 1px solid var(--ink); border-radius: var(--radius); cursor: pointer;
+    font: 600 .78rem/1.2 var(--font-body); letter-spacing: .1em; text-transform: uppercase;
+    transition: background var(--duration-fast) var(--ease-smooth-out), color var(--duration-fast) var(--ease-smooth-out), transform var(--duration-quick) var(--ease-smooth-out); }
+  .cb-btn:hover { background: var(--ink); color: var(--stone); }
+  .cb-btn:active { transform: scale(.98); }
+  @media (max-width: 560px) { .cb { left: 12px; right: 12px; bottom: 12px; width: auto; padding: 16px 16px 16px; } }
+  @media (prefers-reduced-motion: reduce) { .cb { transition: none; } }
+</style>
+<script>
+  type W = Window & {
+    __consent: { read: () => 'granted' | 'denied' | null; write: (v: 'granted' | 'denied') => void };
+    loadAds: () => void;
+    __adsLoaded?: boolean;
+    gtag: (...a: unknown[]) => void;
+  };
+  const w = window as unknown as W;
+  const el = document.getElementById('cookie-banner');
+  if (el && w.__consent) {
+    const show = () => { el.hidden = false; requestAnimationFrame(() => el.classList.add('is-on')); };
+    const hide = () => { el.classList.remove('is-on'); setTimeout(() => { el.hidden = true; }, 300); };
+
+    // Supprime les cookies publicitaires posés par la balise sur ce domaine
+    const clearAdsCookies = () => {
+      const host = location.hostname;
+      const parts = host.split('.');
+      const domains = ['', host, '.' + host, '.' + parts.slice(-2).join('.')];
+      document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((n) => /^(_gcl_|_gac_|_ga|test_cookie)/.test(n)).forEach((n) => {
+        domains.forEach((d) => { document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d ? '; domain=' + d : ''}`; });
+      });
+    };
+
+    if (w.__consent.read() === null) show();
+
+    el.querySelectorAll<HTMLButtonElement>('[data-cb]').forEach((b) => b.addEventListener('click', () => {
+      const v = b.dataset.cb as 'granted' | 'denied';
+      const wasLoaded = !!w.__adsLoaded;
+      w.__consent.write(v);
+      if (v === 'granted') {
+        w.loadAds();
+        hide();
+      } else {
+        w.gtag('consent', 'update', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
+        if (wasLoaded) { clearAdsCookies(); location.reload(); } // la balise déjà chargée ne peut pas être « déchargée » : on repart d'une page propre
+        else hide();
+      }
+    }));
+
+    document.querySelectorAll<HTMLElement>('[data-cookie-open]').forEach((b) => b.addEventListener('click', show));
+  }
+</script>

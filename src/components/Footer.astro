@@ -28,6 +28,7 @@ import { villes } from '../data/villes';
         <li><a href="/faq/">FAQ</a></li>
         <li><a href="/mentions-legales/">Mentions légales</a></li>
         <li><a href="/credits-photos/">Crédits photos</a></li>
+        <li><button type="button" class="cookie-link" data-cookie-open>Gérer les cookies</button></li>
       </ul>
     </div>
   </div>
@@ -47,6 +48,8 @@ import { villes } from '../data/villes';
   .ftr-dep { margin: 40px 0 0; padding-top: 28px; border-top: 1px solid rgba(251,249,245,.16); font-size: .85rem; max-width: none; }
   .ftr-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: .85rem; }
   .ftr-bottom p { margin: 0; }
+  .cookie-link { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; cursor: pointer; min-height: 24px; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size 300ms var(--ease-smooth-out), color 200ms; }
+  .cookie-link:hover { color: var(--brass); background-size: 100% 1px; }
   .ftr-bottom ul { display: flex; flex-wrap: wrap; gap: 6px 22px; }
   @media (max-width: 960px) { .ftr-top { grid-template-columns: 1fr 1fr; } .ftr-brand { grid-column: 1 / -1; } }
   @media (max-width: 560px) { .ftr-top { grid-template-columns: 1fr; } }

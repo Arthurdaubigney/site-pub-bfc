@@ -4,6 +4,7 @@ import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileBar from '../components/MobileBar.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { site } from '../data/site';
 import { photo, type PhotoSlug } from '../data/photos';
 import { organizationSchema, webSiteSchema } from '../lib/schema';
@@ -23,6 +24,18 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
 const og = await getImage({ src: photo(ogPhoto).src, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
 const ogUrl = new URL(og.src, site.url).toString();
 const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
+const consentScript = [
+  "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;",
+  "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});",
+  "(function(){var KEY='cookie-consent',MAX=15552000000;", // 180 jours (recommandation CNIL : 6 mois)
+  "function read(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(o&&(o.v==='granted'||o.v==='denied')&&Date.now()-o.t<MAX)return o.v}catch(e){}return null}",
+  "window.__consent={read:read,write:function(v){try{localStorage.setItem(KEY,JSON.stringify({v:v,t:Date.now()}))}catch(e){}}};",
+  "window.loadAds=function(){if(window.__adsLoaded)return;window.__adsLoaded=true;",
+  "gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});",
+  "var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=" + site.adsId + "';document.head.appendChild(s);",
+  "gtag('js',new Date());gtag('config','" + site.adsId + "');};",
+  "if(read()==='granted')window.loadAds();})();",
+].join('');
 ---
 <!doctype html>
 <html lang="fr" class="no-js">
@@ -34,9 +47,8 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
     <link rel="canonical" href={canonical} />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
     <meta name="google-site-verification" content="XTFH7_9M4i6Ol2hJtHDvRffVk6i-sE910KZX22-qZL8" />
-    <!-- Google Ads (balise Google gtag.js) -->
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.adsId}`}></script>
-    <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.adsId}');`} />
+    <!-- Consentement (Google Consent Mode v2) : tout est refusé par défaut ; la balise Google Ads n'est chargée qu'après accord -->
+    <script is:inline set:html={consentScript} />
     <meta name="theme-color" content="#581c25" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
@@ -63,6 +75,7 @@ const graph = [organizationSchema(), webSiteSchema(), ...jsonLd];
     <main id="contenu"><slot /></main>
     <Footer noCta={noCta} />
     {!noCta && <MobileBar />}
+    <CookieBanner />
     <script>
       // Entrée du hero : une seule fois au chargement (transitions.dev – texts reveal)
       requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll('[data-enter]').forEach((el) => el.classList.add('is-shown'))));
