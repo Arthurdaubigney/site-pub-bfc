@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.antiquites-de-thomas.example/sitemap-index.xml
+Sitemap: https://antiquites-de-thomas.fr/sitemap-index.xml

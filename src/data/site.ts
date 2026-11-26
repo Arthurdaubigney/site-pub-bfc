@@ -7,7 +7,7 @@ export const site = {
   name: 'Les Antiquités de Thomas',
   legalName: 'Les Antiquités de Thomas – Antiquaires & Expertise d’Art',
   tagline: 'Antiquaires & expertise d’art en Bourgogne-Franche-Comté',
-  url: (import.meta.env.SITE_URL as string | undefined) ?? 'https://www.antiquites-de-thomas.example',
+  url: (import.meta.env.SITE_URL as string | undefined) ?? 'https://antiquites-de-thomas.fr',
   locale: 'fr-FR',
   tallyFormId: (import.meta.env.PUBLIC_TALLY_FORM_ID as string | undefined) ?? '',
   contactPath: '/contact/',
